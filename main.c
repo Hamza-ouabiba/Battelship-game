@@ -3,8 +3,8 @@
 #include<string.h>
 #include<stdlib.h>
 #include<time.h>
-#include "bataille.h"
 #include<windows.h>
+#include "bataille.h"
 int main()
  {
 
@@ -15,16 +15,18 @@ int main()
         Navire a1,a2,a3;
         char a[6][6],rejouer,quitter;
         int i,j,position,rate=0,win=0,ho;
-        int x,y,c=0,col=0,lig=0;
+        int x,y,c=0,col=0,lig=0,re;
         int navirePrecedent,choix,navire;
         int success=1;
         int tentative=3;
         char p1[10];//r aire stocker le nom des deux joueurs:
         char p2[10];
-do
-{
+
+    Debut:
     Menu();
     scanf("%d",&choix);
+do
+{
     switch(choix)
     {
             case 1:
@@ -187,12 +189,52 @@ do
                             break;
                      }
             }
-       }
-
-    printf("rejouer !!");
-    fflush(stdin);
-    scanf("%c",&rejouer);
+        }
+   case 2:
+       {
+           regleGeneral();
+           do
+           {
+               printf("Pour revenir Au menu Principal Appuyer sur 1 : ");scanf("%d",&re);
+               if(re==1)
+               {
+                   system("cls");
+                   goto Debut;
+               } else
+               {
+                   puts("Veuillez resaisir ");
+               }
+           } while(choix!=1);
+       } break;
+   case 3:
+    {
+        puts("Voulez-vous vraiment quitter le jeu O/N?");
+        fflush(stdin);
+        scanf("%c",&quitter);
+        if(quitter=='o' || quitter=='O')
+        {
+            exit(0);
+        } else if(quitter=='N' || quitter=='n')
+        {
+            system("cls");
+            goto Debut;
+        } else
+        {
+            do
+            {
+                printf("Veuillez resaisir  ------>");
+                fflush(stdin);
+                scanf("%c",&quitter);
+            } while(quitter!='o' && quitter!='O' && quitter!='N' && quitter!='n');
+        }
+    } break;
    }
+    if(success==3)
+    {
+         printf("rejouer !!");
+         fflush(stdin);
+         scanf("%c",&rejouer);
+    }
 } while(rejouer=='o' || rejouer=='O');
 
 }
