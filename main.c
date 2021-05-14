@@ -317,18 +317,20 @@ void Menu()
 
     void regleGeneral(){
 
-        printf("\t\t\tRegle general du jeu \n");
-        printf ("RULES OF THE GAME:\n");
-	    printf ("1. This is a two player game.However each players uses his own computer and his own instance of this programme\n");
-	    printf ("2. Player will be prompted to select the initial formation of his ships\n");
-	    printf ("    for the game board \n");
-	    printf ("3. There are 6 types of formations to be placed \n");
-	    printf ("4. The ship grid is printed and user should select which goes first: himself or the opponent \n");
-	    printf ("5. The computer randomly selects where the next player's shot will hit(coordinates in GREEK)\n");
-	    printf ("6. When the enemy hits the player, user has to enter incoming shot coordinates(using GREEK letters)\n");
-	    printf ("7. The game begins as each player tries to guess the location of the ships\n");
-	    printf ("   of the opposing player's game board; [*] hit and [X] miss\n");
-	    printf ("8. First player to guess the location of all ships wins\n\n");
+            printf("\t\t\t\tRegle générale du jeu \n") ;
+            printf ("RÈGLES DU JEU:\n") ;
+	    printf ("1) Il s'agit d'un jeu à deux joueurs, mais chaque joueur utilise son propre ordinateur et sa propre instance de ce programme ;
+	    printf ("2. le joueur sera invité à choisir la formation initiale de ses navires\n") ;
+	    printf (" pour le plateau de jeu \n") ;
+	    printf ("3. Il y a 6 types de formations à placer \n") ;
+	    printf ("4. la grille des navires est imprimée et l'utilisateur doit choisir lequel passe en premier : lui-même ou l'adversaire \n") ;
+	    printf ("5. l'ordinateur sélectionne aléatoirement l'endroit où le prochain tir du joueur sera effectué (coordonnées en GREC) \n") ;
+	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonnées du tir entrant (en lettres grecques)\n") ;
+	    printf ("7. Le jeu commence alors que chaque joueur tente de deviner l'emplacement des navires\n") ;
+// 	    printf (" du plateau de jeu de l'adversaire ; [*] touché et [X] manqué\n") ;
+	    printf ("8. Le premier joueur qui a deviné l'emplacement de tous les navires a gagné...") ;
+
+Traduit avec www.DeepL.com/Translator (version gratuite)
     }
 int Ordinateur(char G[6][6])
 {
