@@ -4,21 +4,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include<windows.h>
-typedef struct
-     {
-         int x1;
-         int y1;
-     } Navire;
-typedef struct
-{
-    char p1;
-    char p2;//creation d'une structure qui stocke le nom des deux joueurs
-} player;
-void Menu();
-void joueur1();
-void joueur2();
-void regleGeneral();
-int Ordinateur(char G[6][6]);
+#include "bataille.h"
 int main()
  {
    //mettre un score :
@@ -30,8 +16,8 @@ int main()
         int i,j,position,rate=0,win=0,ho,choixOrdinateur;
         int x,y,c=0,col=0,lig=0,re;
         int navirePrecedent,choix,navire;
-        int success=1;
-        int tentative=3;
+        int success=1,player1=0,player2=0;
+        int tentative=4;
         char p1[10];//r aire stocker le nom des deux joueurs:
         char p2[10];
     system("COLOR 6");
@@ -53,14 +39,16 @@ do
                          }
                      }
                      system("cls");
-                     printf("donner le nom du joueur numero 1 : ");gets(p1);
-                     printf("donner le nom du joueur numero 2 :");
-                     gets(p2);
+                     gotoxy(10,4);printf("donner le nom du joueur numero 1  ");
+                     gotoxy(10,5);gets(p1);
+                     gotoxy(70,4);printf("donner le nom du joueur numero 1  ");
+                     gotoxy(70,5);gets(p1);
                      sleep(2);
                      system("cls");
                      joueur1();
                      do
                      {
+                         player1=1;
                          printf("\n");
                          gotoxy(50,1);printf("Donner le Positionnement de votre navire numero %d  \n",success);
                          gotoxy(50,2);printf("1=HORIZONTAL\n");
@@ -156,7 +144,7 @@ do
             sleep(2);
             system("cls");
             printf("Vous avez  Deployer vos trois navires Avec succes  ");
-            joueur2();
+            joueur1();
             SCORE=0;
             while(SCORE<=9 && tentative>=0)
             {
@@ -200,6 +188,10 @@ do
                      {
                             printf("\nVous avez mis tous les navires a terres   ! !  ! \n");
                             break;
+                     } else if(tentative==0 && SCORE<9)
+                     {
+                         printf("Vous avez pas la chance  :-(");
+                         break;
                      }
             }
         } break;
@@ -299,10 +291,11 @@ do
     }
 
     //le tour pour  l'utilisateur :
-            joueur2();
+            joueur1();
             SCORE=0;
             while(SCORE<=9 && tentative>=0)
             {
+                player2=1;
                 gotoxy(40,3);printf("il vous reste %d tentative ",tentative);
                 //voir si le joueur a bien saisi le debut de cchaque navire sinon il ya une diminution du score;
                 gotoxy(50,10);printf("donner x : ");
@@ -315,17 +308,17 @@ do
                 {
                     if(a1.x1==x && a1.y1==y)
                     {
-                        gotoxy(4*(y+1)+5,2*x+7);printf("O");
+                        gotoxy(4*(y+1)+5,2*x+7);cprintf("O");
                         gotoxy(50,20);printf("Vous avez touche le navire A");
                         SCORE+=3;
                     } else if(x==a2.x1 && a2.y1==y)
                     {
-                       gotoxy(4*(y+1)+5,2*x+7);printf("X");
+                       gotoxy(4*(y+1)+5,2*x+7);cprintf("O");
                        gotoxy(50,20);printf("Vous avez touche le navire B");
                        SCORE+=3;
                     } else if(a3.x1==x && a3.y1==y)
                     {
-                      gotoxy(4*(y+1)+5,2*x+7);printf("C");
+                      gotoxy(4*(y+1)+5,2*x+7);cprintf("O");
                       gotoxy(50,20);printf("Vous avez touche le navire C");
                       SCORE+=3;
                     }
@@ -336,6 +329,8 @@ do
                     {
                        SCORE=0;
                     }
+                    gotoxy(4*(y+1)+5,2*x+7);cprintf("*");
+                    gotoxy(50,20);printf("Rate");
                 }
                 gotoxy(40,6);printf("Votre score actuel est : %d",SCORE);
                 tentative--;
@@ -343,6 +338,10 @@ do
                      {
                             printf("\nVous avez mis tous les navires a terres   ! !  ! \n");
                             break;
+                     } else if(tentative==0 && SCORE<9)
+                     {
+                         gotoxy(70,10);printf("Vous avez pas la chance LE PC GAGNE LE JEU ");
+                         break;
                      }
             }
   } break;
@@ -378,87 +377,12 @@ do
 
         }
    }
-    if(success==3)
-    {
-         printf("rejouer !!");
+
+         gotoxy(5,50);printf("rejouer !!");
          fflush(stdin);
          scanf("%c",&rejouer);
-    }
+
  } while(rejouer=='o' || rejouer=='O');
+ getch();
  return 0;
-}
-void Menu()
-{
-       gotoxy(25,1);printf(" ____        _        _ _ _                               _      \n");
-       gotoxy(25,2);printf("| __ )  __ _| |_ __ _(_) | | ___   _ __   __ ___   ____ _| | ___ \n");
-       gotoxy(25,3);printf("|  _ \\ / _` | __/ _` | | | |/ _ \\ | '_ \\ / _` \\ \\ / / _` | |/ _ \\\n");
-       gotoxy(25,4);printf("| |_) | (_| | || (_| | | | |  __/ | | | | (_| |\\ V / (_| | |  __/\n");
-       gotoxy(25,5);printf("|____/ \\__,_|\\__\\__,_|_|_|_|\\___| |_| |_|\\__,_| \\_/ \\__,_|_|\\___|\n\n");
-       gotoxy(25,6);printf("        _     _     _ "  "__-=-//__  __\\\\-=-__"  " _     _     _        \n" );
-       gotoxy(27,7);printf(".-.,.-'`(,.-'`(,.-'`(,"  "\\_______/"  ".."  "\\_______/" ",)`'-.,)`'-.,)`'-.,¸.-.\n\n" );
-       gotoxy(28,8);printf("ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿");
-       gotoxy(28,9);printf("³                       MENU DU JEU :                      ³ \n");
-       gotoxy(28,10);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´");
-       gotoxy(27,11);printf(" ³       VEUILLEZ CONFIRMER VOTRE CHOIX PAR ENTREE          ³\n");
-       gotoxy(27,12);printf(" ³           1-DEMARRER UNE NOUVELLE PARTIE                 ³ \n");
-       gotoxy(27,13);printf(" ³           2-PARAMETRE ET REGLE DU JEU                    ³ \n");
-       gotoxy(27,14);printf(" ³           3-Jouer avec Ordinateur                        ³\n");
-       gotoxy(27,15);printf(" ³           4-QUITTER LE JEU                               ³\n");
-       gotoxy(28,16);printf("ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ");
-       gotoxy(29,17);puts("Selectionner votre choix ");
- }
-    void joueur1(){
-    system("COLOR 6");
-
-         gotoxy(4,5);printf("   ³ 0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³");
-         gotoxy(4,6);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,7);printf(" 0 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³");
-         gotoxy(4,8);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,9);printf(" 1 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³");
-         gotoxy(4,10);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,11);printf(" 2 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³");
-         gotoxy(4,12);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,13);printf(" 3 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³");
-         gotoxy(4,14);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,15);printf(" 4 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³");
-         gotoxy(4,16);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,17);printf(" 5 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³ 0 ³");
-         gotoxy(4,18);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-    }
-    void joueur2()
-    {
-          gotoxy(4,5);printf("   ³ 0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³");
-         gotoxy(4,6);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,7);printf(" 0 ³   ³   ³   ³   ³   ³   ³");
-         gotoxy(4,8);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,9);printf(" 1 ³   ³   ³   ³   ³   ³   ³");
-         gotoxy(4,10);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,11);printf(" 2 ³   ³   ³   ³   ³   ³   ³");
-         gotoxy(4,12);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,13);printf(" 3 ³   ³   ³   ³   ³   ³   ³");
-         gotoxy(4,14);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,15);printf(" 4 ³   ³   ³   ³   ³   ³   ³");
-         gotoxy(4,16);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-         gotoxy(4,17);printf(" 5 ³   ³   ³   ³   ³   ³   ³");
-         gotoxy(4,18);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-    }
-
-    void regleGeneral(){
-        printf("\t\t\t\tRegle générale du jeu \n") ;
-        printf ("RÈGLES DU JEU:\n") ;
-	    printf ("1) Il s'agit d'un jeu à deux joueurs, mais chaque joueur utilise son propre ordinateur et sa propre instance de ce programme") ;
-	    printf ("2. le joueur sera invité à choisir la formation initiale de ses navires\n") ;
-	    printf (" pour le plateau de jeu \n") ;
-	    printf ("3. Il y a 6 types de formations à placer \n") ;
-	    printf ("4. la grille des navires est imprimée et l'utilisateur doit choisir lequel passe en premier : lui-même ou l'adversaire \n") ;
-	    printf ("5. l'ordinateur sélectionne aléatoirement l'endroit où le prochain tir du joueur sera effectué (coordonnées en GREC) \n") ;
-	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonnées du tir entrant (en lettres grecques)\n") ;
-	    printf ("7. Le jeu commence alors que chaque joueur tente de deviner l'emplacement des navires\n") ;
-	    printf (" du plateau de jeu de l'adversaire ; [*] touché et [X] manqué\n") ;
-	    printf ("8. Le premier joueur qui a deviné l'emplacement de tous les navires a gagné...\n") ;
-    }
-int Getcoordinates(char G[6][6])
-{
-    int x,y;
-    srand(time(NULL));
 }
