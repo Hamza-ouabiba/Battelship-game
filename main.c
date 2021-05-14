@@ -1,3 +1,10 @@
+ /*==============================================================================
+| Programmer: Hamza ouabiba
+| Date: May 2021
++------------------------------------------------------------------------------
+| Description: Ce programme est un jeu Bataille Navale pour 2 joueurs. Chaque joueur
+| essaie de frapper les navires ennemis jusqu'à la victoire!
+==============================================================================*/
 #include<stdio.h>
 #include<conio.h>
 #include<string.h>
