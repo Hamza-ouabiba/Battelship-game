@@ -10,25 +10,29 @@ void gotoxy(int x,int y);
 int main()
  {
    //mettre un score :
-         int SCORE=0;
     //une fois le joueur 2 rate un navire -> diminution du score par exemple ce cas le score sur 40 /
         //traiter les ca_  s des characteres  de navires :
         Navire a1,a2,a3;
+        int SCORE=0;
         char a[6][6],rejouer,quitter;
-        int i,j,position,rate=0,win=0,ho,choixOrdinateur;
+        int suc=0;
+        int i,j,position,rate=0,win=0,ho,choixOrdinateur=0,s=0;
         int x,y,c=0,col=0,lig=0,re;
         int navirePrecedent,choix,navire;
         int success=1,player1=0,player2=0;
         int tentative=4;
         char p1[10];//r aire stocker le nom des deux joueurs:
         char p2[10];
-            system("COLOR 1F");
+        system("COLOR 2");
+do
+{
     Debut:
+
+    system("cls");
     Menu();
     gotoxy(28,18);printf("  ");
     gotoxy(28,18);scanf("%d",&choix);
-do
-{
+
     tentative=3;
     switch(choix)
     {
@@ -42,13 +46,7 @@ do
                              a[i][j]='-';  //initialisation de la matrice par des caracteres  :
                          }
                      }
-                     system("cls");
-                     gotoxy(10,4);printf("donner le nom du joueur numero 1  ");
-                     gotoxy(10,5);gets(p1);
-                     gotoxy(70,4);printf("donner le nom du joueur numero 1  ");
-                     gotoxy(70,5);gets(p1);
-                     sleep(2);
-                     system("cls");
+                     Pseudo();
                      joueur1();
                      do
                      {
@@ -67,8 +65,8 @@ do
                                                 do
                                                 {
                                                     navirePrecedent=1;
-                                                 do
-                                                 {
+                                                   do
+                                                    {
                                                      gotoxy(50,9);printf("donner les coordonne du navire horizontal Linge : ");
                                                      gotoxy(50,10);scanf("%d",&a1.x1);
                                                      gotoxy(50,11);printf("donner les coordonne du navire horizontal Colonne : ");
@@ -83,9 +81,9 @@ do
                                                     a[a1.x1][a1.y1+1]='A';
                                                     a[a1.x1][a1.y1+2]='A';
                                                     success++;
-                                                    gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);cprintf("%c",a[a1.x1][a1.y1]);
-                                                    gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);cprintf("%c",a[a1.x1][a1.y1+1]);
-                                                    gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);cprintf("%c",a[a1.x1][a1.y1+2]);
+                                                    gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
+                                                    gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
+                                                    gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
                                                          }
                                              } while(navirePrecedent==1);
                                            } break;
@@ -110,9 +108,9 @@ do
                                                   a[a2.x1+1][a2.y1]='B';
                                                   a[a2.x1+2][a2.y1]='B';
                                                   success++;
-                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);cprintf("%c",a[a2.x1][a2.y1]);
-                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);cprintf("%c",a[a2.x1+1][a2.y1]);
-                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);cprintf("%c",a[a2.x1+2][a2.y1]);
+                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
+                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
+                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
                                                }
                                               } while(navirePrecedent==1);
                                             } break;
@@ -235,7 +233,9 @@ do
             }
         }
        srand(time(NULL));
-
+           joueur1();
+           success=1;
+           choixOrdinateur=0;
        while(success<=3)
        {
            choixOrdinateur=rand()%4+1;
@@ -246,9 +246,12 @@ do
                                        do
                                            {
                                                navirePrecedent=1;
-                                                  do{
-                                                    a1.x1=rand()%6;
-                                                    }while(a1.x1<0 || a1.x1>5);
+                                                do{
+                                                   a1.x1=rand()%6;
+                                                 }while(a1.x1<0 || a1.y1>5);
+                                                 do{
+                                                     a1.y1=rand()%4;
+                                                 }while( a1.y1<0 ||  a1.y1>3);
                                                  if(a[a1.x1][a1.y1]=='-' && a[a1.x1][a1.y1+1]=='-' && a[a1.x1][a1.y1+2]=='-'){
                                                     navirePrecedent=0;//la valeur va changer lors du deploiement d'un certain navire
                                                     a[a1.x1][a1.y1]='A';
@@ -260,15 +263,17 @@ do
                                  } break;
                             case 2:
                                 {
+                                     success=1;
                                     do
                                         {
                                                   navirePrecedent=1;
-                                              do
-                                                   {
-                                                       a2.y1=rand()%6;
-                                                       a2.x1=rand()%4;
-                                                   } while(a2.y1>4 || a2.x1>3);
-                                                 if(a[a2.x1][a2.y1]=='-' && a[a2.x1+1][a2.y1]=='-' && a[a2.x1+2][a2.y1]=='-'){
+                                              do{
+                                                    a2.y1=rand()%6;
+                                               }while(a2.y1<0 || a2.y1>5);
+                                               do{
+                                                   a2.x1=rand()%4;;
+                                                  }while(a2.x1<0 || a2.x1>3);
+                                                  if(a[a2.x1][a2.y1]=='-' && a[a2.x1+1][a2.y1]=='-' && a[a2.x1+2][a2.y1]=='-'){
                                                    navirePrecedent=0;
                                                   a[a2.x1][a2.y1]='B';
                                                   a[a2.x1+1][a2.y1]='B';
@@ -282,27 +287,31 @@ do
                                     do
                                           {
                                                     navirePrecedent=1;
-                                                  do
-                                                    {
-                                                        a3.y1=rand()%5;
-                                                        a3.x1=rand()%5;
-                                                    } while(a3.y1>4 || a3.x1>4);
+                                                  do{
+                                                    a3.x1=rand()%4;
+                                                 }while(a3.x1<0 || a3.x1>3);
+                                                   do{
+                                                     a3.y1=rand()%4;
+                                                  }while(a3.y1<0 || a3.y1>3);
+
                                                  if(a[a3.x1][a3.y1]=='-' && a[a3.x1+1][a3.y1+1]=='-' && a[a3.x1+2][a3.y1+2]=='-'){
                                                    navirePrecedent=0;
                                                    success++;
                                                    a[a3.x1][a3.y1]='C';
                                                    a[a3.x1+1][a3.y1+1]='C';
                                                    a[a3.x1+2][a3.y1+2]='C';
+
                                                  }
                                            }while(navirePrecedent==1);
                                 } break;
-
        }
     }
 
+
     //le tour pour  l'utilisateur :
-            joueur1();
+
             SCORE=0;
+
             while(SCORE<=9 && tentative>=0)
             {
                 player2=1;
@@ -314,34 +323,43 @@ do
                 gotoxy(50,14);scanf("%d",&y);
                 gotoxy(50,11);printf(" ");
                 gotoxy(50,14);printf(" ");
-                if(a[x][y]=='A' || a[x][y]=='B' || a[x][y]=='C' )
-                {
-                    if(a1.x1==x && a1.y1==y)
-                    {
-                        gotoxy(4*(y+1)+5,2*x+7);cprintf("O");
-                        gotoxy(50,20);printf("Vous avez touche le navire A");
-                        SCORE+=3;
-                    } else if(x==a2.x1 && a2.y1==y)
-                    {
-                       gotoxy(4*(y+1)+5,2*x+7);cprintf("O");
-                       gotoxy(50,20);printf("Vous avez touche le navire B");
-                       SCORE+=3;
-                    } else if(a3.x1==x && a3.y1==y)
-                    {
-                      gotoxy(4*(y+1)+5,2*x+7);cprintf("O");
-                      gotoxy(50,20);printf("Vous avez touche le navire C");
-                      SCORE+=3;
-                    }
-                } else
-                {
-                  SCORE-=3;
-                     if(SCORE<0)
-                    {
-                       SCORE=0;
-                    }
-                       gotoxy(4*(y+1)+5,2*x+7);cprintf("*");
-                      gotoxy(50,20);printf("Rate");
-                }
+               ///pc
+               if(a[x][y]=='A' || a[x][y]=='B' || a[x][y]=='C')
+                  {
+                     if(a[x][y]=='A')
+                     {
+                         SCORE+=3;
+                         gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
+                         gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
+                         gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
+
+                         gotoxy(50,20);printf("Vous avez touche le navire A");printf("       ");
+                     } else if(a[x][y]=='C')
+                           {
+                          SCORE+=3;
+                          gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
+                         gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
+                         gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
+                          gotoxy(50,20);printf("Vous avez touche le navire C");printf("       ");
+                            } else if(a[x][y]=='B')
+                            {
+                                SCORE+=3;
+                                gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
+                                gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
+                                gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
+                                 gotoxy(50,20);printf("Vous avez touche le navire B");printf("       ");
+                            }
+                  } else
+                  {
+                      SCORE-=3;
+                        gotoxy(4*(y+1)+5,2*x+7);printf("X");
+                        gotoxy(50,20);printf("RATE A ZBI");printf("       ");
+                        if(SCORE<0)
+                        {
+                            SCORE=0;
+                        }
+                  }
+
                 gotoxy(40,6);printf("Votre score actuel est : %d",SCORE);
                 tentative--;
                 if(SCORE==9)
