@@ -311,7 +311,7 @@ do
     //le tour pour  l'utilisateur :
 
             SCORE=0;
-
+            tentative=3;
             while(SCORE<=9 && tentative>=0)
             {
                 player2=1;
@@ -333,27 +333,27 @@ do
                          gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
                          gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
 
-                         gotoxy(50,20);printf("Vous avez touche le navire A");printf("       ");
+                         gotoxy(50,20);printf("Vous avez touche le navire A");printf("\t\t\t");
                      } else if(a[x][y]=='C')
                            {
                           SCORE+=3;
                           gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
                          gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
                          gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
-                          gotoxy(50,20);printf("Vous avez touche le navire C");printf("       ");
+                          gotoxy(50,20);printf("Vous avez touche le navire C");printf("\t\t\t");
                             } else if(a[x][y]=='B')
                             {
                                 SCORE+=3;
                                 gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
                                 gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
                                 gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
-                                 gotoxy(50,20);printf("Vous avez touche le navire B");printf("       ");
+                                 gotoxy(50,20);printf("Vous avez touche le navire B");printf("\t\t\t");
                             }
                   } else
                   {
                       SCORE-=3;
                         gotoxy(4*(y+1)+5,2*x+7);printf("X");
-                        gotoxy(50,20);printf("RATE A ZBI");printf("       ");
+                        gotoxy(50,20);printf("RATE A ZBI");printf("\t\t\t");
                         if(SCORE<0)
                         {
                             SCORE=0;
@@ -366,7 +366,7 @@ do
                      {
                             printf("\nVous avez mis tous les navires a terres   ! !  ! \n");
                             break;
-                     } else if(tentative==0 && SCORE<9)
+                     } else if(tentative<=0 && SCORE<9)
                      {
                          gotoxy(70,10);printf("Vous avez pas la chance LE PC GAGNE LE JEU ");
                          break;
