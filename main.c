@@ -4,13 +4,15 @@
 #include<stdlib.h>
 #include<time.h>
 #include<windows.h>
-#include "bataille.h"
+#include<mmsystem.h>
+#include"bataille.h"
+void gotoxy(int x,int y);
 int main()
  {
    //mettre un score :
          int SCORE=0;
     //une fois le joueur 2 rate un navire -> diminution du score par exemple ce cas le score sur 40 /
-        //traiter les cas des characteres  de navires :
+        //traiter les ca_  s des characteres  de navires :
         Navire a1,a2,a3;
         char a[6][6],rejouer,quitter;
         int i,j,position,rate=0,win=0,ho,choixOrdinateur;
@@ -20,12 +22,14 @@ int main()
         int tentative=4;
         char p1[10];//r aire stocker le nom des deux joueurs:
         char p2[10];
-    system("COLOR 6");
+            system("COLOR 1F");
     Debut:
     Menu();
+    gotoxy(28,18);printf("  ");
     gotoxy(28,18);scanf("%d",&choix);
 do
 {
+    tentative=3;
     switch(choix)
     {
             case 1:
@@ -54,7 +58,7 @@ do
                          gotoxy(50,2);printf("1=HORIZONTAL\n");
                          gotoxy(50,3);printf("2=VERTICAL\n");
                          gotoxy(50,4);printf("3=DIAGONAL\n");
-                         gotoxy(50,5);printf(" ");
+                         gotoxy(50,5);printf("  ");
                          gotoxy(50,5);scanf("%d",&navire);
                          switch(navire)
                          {
@@ -133,9 +137,9 @@ do
                                                    a[a3.x1][a3.y1]='C';
                                                    a[a3.x1+1][a3.y1+1]='C';
                                                    a[a3.x1+2][a3.y1+2]='C';
-                                                   gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);cprintf("%c",a[a3.x1][a3.y1]);
-                                                   gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);cprintf("%c",a[a3.x1+1][a3.y1+1]);
-                                                   gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);cprintf("%c",a[a3.x1+2][a3.y1+2]);
+                                                   gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
+                                                   gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
+                                                   gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
                                                  }
                                                 }while(navirePrecedent==1);
                                             } break;
@@ -160,17 +164,23 @@ do
                 {
                     if(a1.x1==x && a1.y1==y)
                     {
-                        gotoxy(4*(y+1)+5,2*x+7);printf("O");
+                        gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
+                        gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
+                        gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
                         gotoxy(50,20);printf("Vous avez touche le navire A");
                         SCORE+=3;
                     } else if(x==a2.x1 && a2.y1==y)
                     {
-                       gotoxy(4*(y+1)+5,2*x+7);printf("X");
+                       gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
+                       gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
+                       gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
                        gotoxy(50,20);printf("Vous avez touche le navire B");
                        SCORE+=3;
                     } else if(a3.x1==x && a3.y1==y)
                     {
-                      gotoxy(4*(y+1)+5,2*x+7);printf("C");
+                       gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
+                       gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
+                       gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
                       gotoxy(50,20);printf("Vous avez touche le navire C");
                       SCORE+=3;
                     }
@@ -276,7 +286,7 @@ do
                                                     {
                                                         a3.y1=rand()%5;
                                                         a3.x1=rand()%5;
-                                                    } while(a3.y1>=4 || a3.x1>=4);
+                                                    } while(a3.y1>4 || a3.x1>4);
                                                  if(a[a3.x1][a3.y1]=='-' && a[a3.x1+1][a3.y1+1]=='-' && a[a3.x1+2][a3.y1+2]=='-'){
                                                    navirePrecedent=0;
                                                    success++;
@@ -329,8 +339,8 @@ do
                     {
                        SCORE=0;
                     }
-                    gotoxy(4*(y+1)+5,2*x+7);cprintf("*");
-                    gotoxy(50,20);printf("Rate");
+                       gotoxy(4*(y+1)+5,2*x+7);cprintf("*");
+                      gotoxy(50,20);printf("Rate");
                 }
                 gotoxy(40,6);printf("Votre score actuel est : %d",SCORE);
                 tentative--;
@@ -365,24 +375,38 @@ do
                 fflush(stdin);
                 scanf("%c",&quitter);
             } while(quitter!='o' && quitter!='O' && quitter!='N' && quitter!='n');
+            if(quitter=='o' || quitter=='O')
+            {
+                exit(0);
+            } else
+            {
+                system("cls");
+                goto Debut;
+            }
         }
     } break;
     default:
         {
             do
             {
+              printf("     ");
               printf("choix erronee veuillez resaisir ");
               scanf("%d",&choix);
-            } while(choix>3);
+            } while(choix>4);
+            system("cls");
+            goto Debut;
 
         }
    }
 
-         gotoxy(5,50);printf("rejouer !!");
+         gotoxy(5,50);printf("rejouer Repondez par oui ou non  !!");
          fflush(stdin);
          scanf("%c",&rejouer);
 
  } while(rejouer=='o' || rejouer=='O');
  getch();
  return 0;
+}
+void gotoxy(int x,int y) {
+    printf("%c[%d;%df", 0x1b, y, x);
 }
