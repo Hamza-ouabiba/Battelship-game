@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<conio.h>
 #include<string.h>
@@ -5,8 +6,27 @@
 #include<time.h>
 #include<windows.h>
 #include<mmsystem.h>
-#include"bataille.h"
-void gotoxy(int x,int y);
+typedef struct
+     {
+         int x1;
+         int y1;
+     } Navire;
+typedef struct
+{
+    char *nom;
+    int Score;//creation d'une structure qui stocke le nom des deux joueurs
+} player;
+static int i;
+static int j;
+int score;
+int success=1;
+int CoordonnePcHorizontal(char a[6][6]);
+int Coordonnee_Pc_Vertocal(char a[6][6]);
+int Coordonnee_Pc_diagonal(char a[6][6]);
+void Menu();
+void joueur1();
+void regleGeneral();
+void Pseudo();
 int main()
  {
    //mettre un score :
@@ -19,10 +39,10 @@ int main()
         int i,j,position,rate=0,win=0,ho,choixOrdinateur=0,s=0;
         int x,y,c=0,col=0,lig=0,re;
         int navirePrecedent,choix,navire;
-        int success=1,player1=0,player2=0;
+        int player1=0,player2=0;
         int tentative=4;
-        char p1[10];//r aire stocker le nom des deux joueurs:
-        char p2[10];
+        int success=1;
+
         system("COLOR 2");
 do
 {
@@ -32,7 +52,6 @@ do
     Menu();
     gotoxy(28,18);printf("  ");
     gotoxy(28,18);scanf("%d",&choix);
-
     tentative=3;
     switch(choix)
     {
@@ -223,8 +242,9 @@ do
 
    case 3:
     {
+
         system("cls");
-        puts("\n************JOUER CONTRE ORDINATEUR************\n");
+        puts("\n************JOUER CONTRE ORDINATEUR************");
         for(i=0;i<6;i++)
         {
             for(j=0;j<6;j++)
@@ -232,89 +252,46 @@ do
                 a[i][j]='-'; //initialisation de la matrice :
             }
         }
-       srand(time(NULL));
-           joueur1();
-           success=1;
-           choixOrdinateur=0;
-       while(success<=3)
+     srand(time(NULL));
+     joueur1();
+     while(success<=3)
        {
            choixOrdinateur=rand()%4+1;
            switch (choixOrdinateur)
            {
                             case 1:
                                  {
-                                       do
-                                           {
-                                               navirePrecedent=1;
-                                                do{
-                                                   a1.x1=rand()%6;
-                                                 }while(a1.x1<0 || a1.y1>5);
-                                                 do{
-                                                     a1.y1=rand()%4;
-                                                 }while( a1.y1<0 ||  a1.y1>3);
-                                                 if(a[a1.x1][a1.y1]=='-' && a[a1.x1][a1.y1+1]=='-' && a[a1.x1][a1.y1+2]=='-'){
-                                                    navirePrecedent=0;//la valeur va changer lors du deploiement d'un certain navire
-                                                    a[a1.x1][a1.y1]='A';
-                                                    a[a1.x1][a1.y1+1]='A';
-                                                    a[a1.x1][a1.y1+2]='A';
-                                                    success++;
-                                                         }
-                                             } while(navirePrecedent==1);
+                                      //horizontal
+                                     if(CoordonnePcHorizontal(a)==1)
+                                     {
+                                            success++; //cette incrementation va nous indiquer que l'emeplacement est vide;
+                                     }
+
                                  } break;
                             case 2:
                                 {
-                                     success=1;
-                                    do
-                                        {
-                                                  navirePrecedent=1;
-                                              do{
-                                                    a2.y1=rand()%6;
-                                               }while(a2.y1<0 || a2.y1>5);
-                                               do{
-                                                   a2.x1=rand()%4;;
-                                                  }while(a2.x1<0 || a2.x1>3);
-                                                  if(a[a2.x1][a2.y1]=='-' && a[a2.x1+1][a2.y1]=='-' && a[a2.x1+2][a2.y1]=='-'){
-                                                   navirePrecedent=0;
-                                                  a[a2.x1][a2.y1]='B';
-                                                  a[a2.x1+1][a2.y1]='B';
-                                                  a[a2.x1+2][a2.y1]='B';
-                                                  success++;
-                                               }
-                                        } while(navirePrecedent==1);
+                                   //vertical
+                                   if( Coordonnee_Pc_Vertocal(a)==1)
+                                   {
+                                       success++;
+                                   }
                                 }break;
                             case 3:
                                 {
-                                    do
-                                          {
-                                                    navirePrecedent=1;
-                                                  do{
-                                                    a3.x1=rand()%4;
-                                                 }while(a3.x1<0 || a3.x1>3);
-                                                   do{
-                                                     a3.y1=rand()%4;
-                                                  }while(a3.y1<0 || a3.y1>3);
+                                   //diagonal
+                                   if(Coordonnee_Pc_diagonal(a)==1)
+                                   {
+                                       success++;
+                                   }
 
-                                                 if(a[a3.x1][a3.y1]=='-' && a[a3.x1+1][a3.y1+1]=='-' && a[a3.x1+2][a3.y1+2]=='-'){
-                                                   navirePrecedent=0;
-                                                   success++;
-                                                   a[a3.x1][a3.y1]='C';
-                                                   a[a3.x1+1][a3.y1+1]='C';
-                                                   a[a3.x1+2][a3.y1+2]='C';
-
-                                                 }
-                                           }while(navirePrecedent==1);
                                 } break;
        }
     }
-
-
-    //le tour pour  l'utilisateur :
 
             SCORE=0;
             tentative=3;
             while(SCORE<=9 && tentative>=0)
             {
-                player2=1;
                 gotoxy(40,3);printf("il vous reste %d tentative ",tentative);
                 //voir si le joueur a bien saisi le debut de cchaque navire sinon il ya une diminution du score;
                 gotoxy(50,10);printf("donner x : ");
@@ -347,7 +324,7 @@ do
                                 gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
                                 gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
                                 gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
-                                 gotoxy(50,20);printf("Vous avez touche le navire B");printf("\t\t\t");
+                                gotoxy(50,20);printf("Vous avez touche le navire B");printf("\t\t\t");
                             }
                   } else
                   {
@@ -372,6 +349,10 @@ do
                          break;
                      }
             }
+
+
+    //le tour pour  l'utilisateur :
+
   } break;
     case 4:
     {
@@ -425,6 +406,149 @@ do
  getch();
  return 0;
 }
-void gotoxy(int x,int y) {
-    printf("%c[%d;%df", 0x1b, y, x);
+
+void Menu()
+{
+    textbackground(3);
+       gotoxy(25,1);printf(" ____        _        _ _ _                               _      \n");
+       gotoxy(25,2);printf("| __ )  __ _| |_ __ _(_) | | ___   _ __   __ ___   ____ _| | ___ \n");
+       gotoxy(25,3);printf("|  _ \\ / _` | __/ _` | | | |/ _ \\ | '_ \\ / _` \\ \\ / / _` | |/ _ \\\n");
+       gotoxy(25,4);printf("| |_) | (_| | || (_| | | | |  __/ | | | | (_| |\\ V / (_| | |  __/\n");
+       gotoxy(25,5);printf("|____/ \\__,_|\\__\\__,_|_|_|_|\\___| |_| |_|\\__,_| \\_/ \\__,_|_|\\___|\n\n");
+       gotoxy(25,6);printf("        _     _     _ "  "__-=-//__  __\\\\-=-__"  " _     _     _        \n" );
+       gotoxy(27,7);printf(".-.,.-'`(,.-'`(,.-'`(,"  "\\_______/"  ".."  "\\_______/" ",)`'-.,)`'-.,)`'-.,�.-.\n\n" );
+       gotoxy(28,8);printf("����������������������������������������������������������Ŀ");
+       gotoxy(28,9);printf("�                       MENU DU JEU :                      � \n");
+       gotoxy(28,10);printf("����������������������������������������������������������Ĵ");
+       gotoxy(27,11);printf(" �       VEUILLEZ CONFIRMER VOTRE CHOIX PAR ENTREE          �\n");
+       gotoxy(27,12);printf(" �           1-DEMARRER UNE NOUVELLE PARTIE                 � \n");
+       gotoxy(27,13);printf(" �           2-PARAMETRE ET REGLE DU JEU                    � \n");
+       gotoxy(27,14);printf(" �           3-Jouer avec Ordinateur                        �\n");
+       gotoxy(27,15);printf(" �           4-QUITTER LE JEU                               �\n");
+       gotoxy(28,16);printf("������������������������������������������������������������");
+       gotoxy(29,17);puts("Selectionner votre choix ");
+ }
+void joueur1(){
+    system("COLOR 2");
+         gotoxy(4,5);printf("   � 0 � 1 � 2 � 3 � 4 � 5 �");
+         gotoxy(4,6);printf("����������ĳ��ĳ��ĳ��ĳ��ĳ");
+         gotoxy(4,7);printf(" 0 �   �   �   �   �   �   �");
+         gotoxy(4,8);printf("����������ĳ��ĳ��ĳ��ĳ��ĳ");
+         gotoxy(4,9);printf(" 1 �   �   �   �   �   �   �");
+         gotoxy(4,10);printf("����������ĳ��ĳ��ĳ��ĳ��ĳ");
+         gotoxy(4,11);printf(" 2 �   �   �   �   �   �   �");
+         gotoxy(4,12);printf("����������ĳ��ĳ��ĳ��ĳ��ĳ");
+         gotoxy(4,13);printf(" 3 �   �   �   �   �   �   �");
+         gotoxy(4,14);printf("����������ĳ��ĳ��ĳ��ĳ��ĳ");
+         gotoxy(4,15);printf(" 4 �   �   �   �   �   �   �");
+         gotoxy(4,16);printf("����������ĳ��ĳ��ĳ��ĳ��ĳ");
+         gotoxy(4,17);printf(" 5 �   �   �   �   �   �   �");
+         gotoxy(4,18);printf("����������ĳ��ĳ��ĳ��ĳ��ĳ");
+    }
+void regleGeneral(){
+        printf("\t\t\t\tRegle generale du jeu \n") ;
+        printf ("REGLES DU JEU:\n") ;
+	    printf ("1) Il s'agit d'un jeu � deux joueurs, mais chaque joueur utilise son propre ordinateur et sa propre instance de ce programme") ;
+	    printf ("2. le joueur sera invit� � choisir la formation initiale de ses navires\n") ;
+	    printf (" pour le plateau de jeu \n") ;
+	    printf ("3. Il y a 6 types de formations a placer \n") ;
+	    printf ("4. la grille des navires est imprim%ce et l'utilisateur doit choisir lequel passe en premier : lui-meme ou l'adversaire \n",120) ;
+	    printf ("5. l'ordinateur s�lectionne al�atoirement l'endroit o� le prochain tir du joueur sera effectu� (coordonn�es en GREC) \n") ;
+	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonn�es du tir entrant (en lettres grecques)\n") ;
+	    printf ("7. Le jeu commence alors que chaque joueur tente de deviner l'emplacement des navires\n") ;
+	    printf (" du plateau de jeu de l'adversaire ; [*] touche et [X] manque\n") ;
+	    printf ("8. Le premier joueur qui a devine l'emplacement de tous les navires a gagne...\n") ;
+    }
+void Pseudo()
+{
+                     player p1,p2;
+                     system("cls");
+                     gotoxy(10,4);printf("donner le nom du joueur numero 1  ");
+                     gotoxy(10,5);gets(p1.nom);
+                     gotoxy(70,4);printf("donner le nom du joueur numero 2  ");
+                     gotoxy(70,5);gets(p2.nom);
+                     sleep(2);
+                     system("cls");
+
+}
+int CoordonnePcHorizontal(char a[6][6])
+{
+    Navire a1;
+    int horizontal=0;
+    int navirePrecedent=1;
+     srand(time(NULL));
+     do
+        {
+          navirePrecedent=1;
+                   do{
+                     a1.x1=rand()%6;
+                    }while(a1.x1<0 || a1.y1>5);
+                           do{
+                                 a1.y1=rand()%4;
+                             }while( a1.y1<0 ||  a1.y1>3);
+                    if(a[a1.x1][a1.y1]=='-' && a[a1.x1][a1.y1+1]=='-' && a[a1.x1][a1.y1+2]=='-'){
+                             navirePrecedent=0;//la valeur va changer lors du deploiement d'un certain navire
+                             a[a1.x1][a1.y1]='A';
+                             a[a1.x1][a1.y1+1]='A';
+                             a[a1.x1][a1.y1+2]='A';
+                             (success++);
+
+                                }
+       } while(navirePrecedent==1);
+       return horizontal;
+}
+int Coordonnee_Pc_Vertocal(char a[6][6])
+{
+    int navirePrecedent=1;
+    Navire a2;
+    int estl=0;
+     srand(time(NULL));
+
+
+     do
+       {
+                                                  navirePrecedent=1;
+                                              do{
+                                                    a2.y1=rand()%6;
+                                               }while(a2.y1<0 || a2.y1>5);
+                                               do{
+                                                   a2.x1=rand()%4;
+                                                  }while(a2.x1<0 || a2.x1>3);
+                                                  if(a[a2.x1][a2.y1]=='-' && a[a2.x1+1][a2.y1]=='-' && a[a2.x1+2][a2.y1]=='-'){
+                                                   navirePrecedent=0;
+                                                  a[a2.x1][a2.y1]='B';
+                                                  a[a2.x1+1][a2.y1]='B';
+                                                  a[a2.x1+2][a2.y1]='B';
+                                                  estl=1;
+                                               }
+                                        } while(navirePrecedent==1);
+
+             return estl;
+}
+int Coordonnee_Pc_diagonal(char a[6][6])
+{
+    Navire a3;
+    int diagonal=0;
+    int navirePrecedent=1;
+     srand(time(NULL));
+
+                         do
+                                          {
+                                                    navirePrecedent=1;
+                                                  do{
+                                                    a3.x1=rand()%4;
+                                                 }while(a3.x1<0 || a3.x1>3);
+                                                   do{
+                                                     a3.y1=rand()%4;
+                                                  }while(a3.y1<0 || a3.y1>3);
+
+                                                 if(a[a3.x1][a3.y1]=='-' && a[a3.x1+1][a3.y1+1]=='-' && a[a3.x1+2][a3.y1+2]=='-'){
+                                                   navirePrecedent=0;
+                                                   a[a3.x1][a3.y1]='C';
+                                                   a[a3.x1+1][a3.y1+1]='C';
+                                                   a[a3.x1+2][a3.y1+2]='C';
+                                                    diagonal=1;
+                                                 }
+                                           }while(navirePrecedent==1);
+                    return diagonal;
 }
