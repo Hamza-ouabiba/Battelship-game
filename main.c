@@ -22,7 +22,7 @@ int success=1;
 Navire CoordonnePcHorizontal();  //choisir les coord avec une fonction puis les controlers dans une autre fonction
 Navire Coordonnee_Pc_Vertocal();
 Navire Coordonnee_Pc_diagonal(); //choisir les coord avec une fonction puis les controlers dans une autre fonction
-void matrice(void);
+char **matrice();
 int Check_Horizontal(char a[6][6]);
 int Check_vertical(char a[6][6]);
 int Check_diagonal(char a[6][6]);
@@ -44,10 +44,10 @@ int main()
         int navirePrecedent,choix,navire;
         int player1=0,player2=0;
         int tentative=4;
-        char **p=a;
         int success=1;
+        char **tab=NULL;
 
-        system("COLOR 2");
+        system("COLOR F1");
 do
 {
     Debut:
@@ -63,15 +63,15 @@ do
             case 1:
                 {
                      success=1;
+                     Pseudo();
+                     joueur1();
                      for(i=0;i<6;i++)
                      {
                          for(j=0;j<6;j++)
                          {
-                             a[i][j]='-';  //initialisation de la matrice par des caracteres  :
+                             a[i][j]='-';
                          }
                      }
-                     Pseudo();
-                     joueur1();
                      do
                      {
                          player1=1;
@@ -95,8 +95,8 @@ do
                                                      gotoxy(50,10);scanf("%d",&a1.x1);
                                                      gotoxy(50,11);printf("donner les coordonne du navire horizontal Colonne : ");
                                                      gotoxy(50,12);scanf("%d",&a1.y1);
-                                                     gotoxy(50,10);printf(" ");
-                                                     gotoxy(50,12);printf(" ");
+                                                     gotoxy(50,10);printf("  ");
+                                                     gotoxy(50,12);printf("  ");
 
                                                  } while(a1.y1>=4);
                                                  if(a[a1.x1][a1.y1]=='-' && a[a1.x1][a1.y1+1]=='-' && a[a1.x1][a1.y1+2]=='-'){
@@ -122,8 +122,8 @@ do
                                                    gotoxy(50,10);scanf("%d",&a2.x1);
                                                    gotoxy(50,11);printf("donner les coordonne du navire Vertical colonne : ");
                                                    gotoxy(50,12);scanf("%d",&a2.y1);
-                                                   gotoxy(50,10);printf(" ");
-                                                   gotoxy(50,12);printf(" ");
+                                                   gotoxy(50,10);printf("  ");
+                                                   gotoxy(50,12);printf("  ");
 
                                                   } while(a2.y1>4 || a2.x1>3);
                                                  if(a[a2.x1][a2.y1]=='-' && a[a2.x1+1][a2.y1]=='-' && a[a2.x1+2][a2.y1]=='-'){
@@ -149,8 +149,8 @@ do
                                                     gotoxy(50,10);scanf("%d",&a3.x1);
                                                     gotoxy(50,11);printf("donner les coordonne  du navire Diagonal Diagonal colonne");
                                                     gotoxy(50,12);scanf("%d",&a3.y1);
-                                                    gotoxy(50,10);printf(" ");
-                                                    gotoxy(50,12);printf(" ");
+                                                    gotoxy(50,10);printf("  ");
+                                                    gotoxy(50,12);printf("  ");
 
                                                     } while(a3.y1>=4 || a3.x1>=4);
                                                  if(a[a3.x1][a3.y1]=='-' && a[a3.x1+1][a3.y1+1]=='-' && a[a3.x1+2][a3.y1+2]=='-'){
@@ -306,7 +306,9 @@ do
                                 } break;
              }
            }
-
+          getch();
+          system("cls");
+          joueur1();
 
             SCORE=0;
             tentative=3;
@@ -326,31 +328,31 @@ do
                      if(a[x][y]=='A')
                      {
                          SCORE+=3;
-                         gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
-                         gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
-                         gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
+                         gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[x][y]);
+                         gotoxy(4*(y+2)+5,2*x+7);printf("%c",a[x][y+1]);
+                         gotoxy(4*(y+3)+5,2*x+7);printf("%c",a[x][y+2]);
 
                          gotoxy(50,20);printf("Vous avez touche le navire A");printf("\t\t\t");
                      } else if(a[x][y]=='C')
                            {
                           SCORE+=3;
-                          gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
-                         gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
-                         gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
+                          gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[a3.x1][a3.y1]);
+                         gotoxy(4*(y+2)+5,2*x+9);printf("%c",a[a3.x1+1][a3.y1+1]);
+                         gotoxy(4*(y+3)+5,2*x+11);printf("%c",a[a3.x1+2][a3.y1+2]);
                           gotoxy(50,20);printf("Vous avez touche le navire C");printf("\t\t\t");
                             } else if(a[x][y]=='B')
                             {
                                 SCORE+=3;
-                                gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
-                                gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
-                                gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
+                                gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[a2.x1][a2.y1]);
+                                gotoxy(4*(y+1)+5,2*x+9);printf("%c",a[a2.x1+1][a2.y1]);
+                                gotoxy(4*(y+1)+5,2*x+11);printf("%c",a[a2.x1+2][a2.y1]);
                                  gotoxy(50,20);printf("Vous avez touche le navire B");printf("\t\t\t");
                             }
                   } else
                   {
                       SCORE-=3;
                         gotoxy(4*(y+1)+5,2*x+7);printf("X");
-                        gotoxy(50,20);printf("\t\t\t");printf("RATE ");
+                        gotoxy(50,20);printf("RATE ");printf("                             ");
                         if(SCORE<0)
                         {
                             SCORE=0;
@@ -477,7 +479,7 @@ void regleGeneral(){
 	    printf ("5. l'ordinateur sï¿½lectionne alï¿½atoirement l'endroit oï¿½ le prochain tir du joueur sera effectuï¿½ (coordonnï¿½es en GREC) \n") ;
 	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonnï¿½es du tir entrant (en lettres grecques)\n") ;
 	    printf ("7. Le jeu commence alors que chaque joueur tente de deviner l'emplacement des navires\n") ;
-	    printf (" du plateau de jeu de l'adversaire ; [*] touche et [X] manque\n") ;
+	    printf (" du plateau de jeu de l'adversaire ; [chacaractere du navire] touche et [X] manque\n") ;
 	    printf ("8. Le premier joueur qui a devine l'emplacement de tous les navires a gagne...\n") ;
     }
 void Pseudo()
@@ -577,9 +579,9 @@ int Check_diagonal(char a[6][6])
         }
         return navirePrecedent;
 }
-void matrice()
+char **matrice()
 {
-    char a[6][6];
+	int** a = (int**)malloc(3*sizeof(int*)); //allocation des colonnes
     for(i=0;i<6;i++)
     {
         for(j=0;j<6;j++)
@@ -587,4 +589,7 @@ void matrice()
             a[i][j]='-';
         }
     }
+    return a;
 }
+//les caracteres pour les navires :
+
