@@ -22,6 +22,8 @@ int success=1;
 Navire CoordonnePcHorizontal();  //choisir les coord avec une fonction puis les controlers dans une autre fonction
 Navire Coordonnee_Pc_Vertocal();
 Navire Coordonnee_Pc_diagonal(); //choisir les coord avec une fonction puis les controlers dans une autre fonction
+void delay(clock_t a);
+void intro();
 char **matrice();
 int Check_Horizontal(char a[6][6]);
 int Check_vertical(char a[6][6]);
@@ -46,8 +48,8 @@ int main()
         int tentative=4;
         int success=1;
         char **tab=NULL;
-
         system("COLOR F1");
+    intro();
 do
 {
     Debut:
@@ -189,21 +191,21 @@ do
                         gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
                         gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
                         gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
-                        gotoxy(50,20);printf("Vous avez touche le navire A");
+                        gotoxy(50,20);printf("Vous avez coulez le navire A");
                         SCORE+=3;
                     } else if(x==a2.x1 && a2.y1==y)
                     {
                        gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
                        gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
                        gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
-                       gotoxy(50,20);printf("Vous avez touche le navire B");
+                       gotoxy(50,20);printf("Vous avez coulez le navire B");
                        SCORE+=3;
                     } else if(a3.x1==x && a3.y1==y)
                     {
                        gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
                        gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
                        gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
-                      gotoxy(50,20);printf("Vous avez touche le navire C");
+                      gotoxy(50,20);printf("Vous avez coulez le navire C");
                       SCORE+=3;
                     }
                 } else
@@ -309,7 +311,6 @@ do
           getch();
           system("cls");
           joueur1();
-
             SCORE=0;
             tentative=3;
             while(SCORE<=9 && tentative>=0)
@@ -352,7 +353,7 @@ do
                   {
                       SCORE-=3;
                         gotoxy(4*(y+1)+5,2*x+7);printf("X");
-                        gotoxy(50,20);printf("RATE ");printf("                             ");
+                        gotoxy(50,20);printf("RATE ");printf("                             ");//blanks deleting function in next script
                         if(SCORE<0)
                         {
                             SCORE=0;
@@ -363,7 +364,7 @@ do
                 tentative--;
                 if(SCORE==9)
                      {
-                            printf("\nVous avez mis tous les navires a terres   ! !  ! \n");
+                            printf("\nVous avez coulees tous les navires   ! !  ! \n");
                             break;
                      } else if(tentative<=0 && SCORE<9)
                      {
@@ -512,7 +513,6 @@ int Check_Horizontal(char a[6][6])
     int navirePrecedent=0;
     //appel de la fonction :
     Navire s;
-    matrice();
        s=CoordonnePcHorizontal();
         if(a[s.x1][s.y1]=='-' && a[s.x1][s.y1+1]=='-' && a[s.x1][s.y1+2]=='-'){
                                                    navirePrecedent=1;
@@ -540,7 +540,6 @@ int Check_vertical(char a[6][6])
     int navirePrecedent=0;
     //appel de la fonction :
     Navire s;
-    matrice();
        s=Coordonnee_Pc_Vertocal();
         if(a[s.x1][s.y1]=='-' && a[s.x1+1][s.y1]=='-' && a[s.x1+2][s.y1]=='-'){
                                                    navirePrecedent=1;
@@ -591,5 +590,33 @@ char **matrice()
     }
     return a;
 }
-//les caracteres pour les navires :
+void delay(clock_t a)
+{
+    clock_t start;
+    start  = clock();
+    while(clock()-start<a)
+    {
 
+    }
+}
+//les caracteres pour les navires :
+void intro()
+{
+    char names[]="Programmed By ME  hamza ouabiba :) ";
+     for(i=0;i<10;i++)
+    {
+        printf("\n");
+    }
+    for(i=0;i<30;i++)
+    {
+        printf(" ");
+    }
+    for(i=0;names[i]!='\0';i++)
+    {
+        printf("%c",names[i]);
+        delay(60);
+    }
+    printf("\n");
+    delay(1500);
+    system("cls");
+}
