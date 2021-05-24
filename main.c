@@ -22,12 +22,12 @@ int success=1;
 Navire CoordonnePcHorizontal();  //choisir les coord avec une fonction puis les controlers dans une autre fonction
 Navire Coordonnee_Pc_Vertocal();
 Navire Coordonnee_Pc_diagonal(); //choisir les coord avec une fonction puis les controlers dans une autre fonction
-void delay(clock_t a);
-void intro();
-char **matrice();
 int Check_Horizontal(char a[6][6]);
 int Check_vertical(char a[6][6]);
 int Check_diagonal(char a[6][6]);
+void menu_positionnement(int navire,char a[6][6],int success);
+void delay(clock_t a);
+void intro(void);
 void Menu(void);
 void joueur1(void);
 void regleGeneral(void);
@@ -46,10 +46,10 @@ int main()
         int navirePrecedent,choix,navire;
         int player1=0,player2=0;
         int tentative=4;
-        int success=1;
-        char **tab=NULL;
+        int success=1,diagonal=0,vertical=0,horizontal=0;
+
         system("COLOR F1");
-    intro();
+        intro();
 do
 {
     Debut:
@@ -58,117 +58,22 @@ do
     Menu();
     gotoxy(28,18);printf("  ");
     gotoxy(28,18);scanf("%d",&choix);
-
-    tentative=3;
-    switch(choix)
+ switch(choix)
     {
             case 1:
                 {
                      success=1;
                      Pseudo();
                      joueur1();
-                     for(i=0;i<6;i++)
+                      for(i=0;i<6;i++)
                      {
                          for(j=0;j<6;j++)
                          {
                              a[i][j]='-';
                          }
                      }
-                     do
-                     {
-                         player1=1;
-                         printf("\n");
-                         gotoxy(50,1);printf("Donner le Positionnement de votre navire numero %d  \n",success);
-                         gotoxy(50,2);printf("1=HORIZONTAL\n");
-                         gotoxy(50,3);printf("2=VERTICAL\n");
-                         gotoxy(50,4);printf("3=DIAGONAL\n");
-                         gotoxy(50,5);printf("  ");
-                         gotoxy(50,5);scanf("%d",&navire);
-                         switch(navire)
-                         {
-                                         case 1:
-                                             {
-                                                do
-                                                {
-                                                    navirePrecedent=1;
-                                                   do
-                                                    {
-                                                     gotoxy(50,9);printf("donner les coordonne du navire horizontal Linge : ");
-                                                     gotoxy(50,10);scanf("%d",&a1.x1);
-                                                     gotoxy(50,11);printf("donner les coordonne du navire horizontal Colonne : ");
-                                                     gotoxy(50,12);scanf("%d",&a1.y1);
-                                                     gotoxy(50,10);printf("  ");
-                                                     gotoxy(50,12);printf("  ");
-
-                                                 } while(a1.y1>=4);
-                                                 if(a[a1.x1][a1.y1]=='-' && a[a1.x1][a1.y1+1]=='-' && a[a1.x1][a1.y1+2]=='-'){
-                                                    navirePrecedent=0;//la valeur va changer lors du deploiement d'un certain navire
-                                                    a[a1.x1][a1.y1]='A';
-                                                    a[a1.x1][a1.y1+1]='A';
-                                                    a[a1.x1][a1.y1+2]='A';
-                                                    success++;
-                                                    gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
-                                                    gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
-                                                    gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
-                                                         }
-                                             } while(navirePrecedent==1);
-                                           } break;
-                                         case 2:
-                                            {
-                                                do
-                                                {
-                                                   navirePrecedent=1;
-                                                  do
-                                                   {
-                                                   gotoxy(50,9);printf("donner les coordonne du navire Vertical Ligne : ");
-                                                   gotoxy(50,10);scanf("%d",&a2.x1);
-                                                   gotoxy(50,11);printf("donner les coordonne du navire Vertical colonne : ");
-                                                   gotoxy(50,12);scanf("%d",&a2.y1);
-                                                   gotoxy(50,10);printf("  ");
-                                                   gotoxy(50,12);printf("  ");
-
-                                                  } while(a2.y1>4 || a2.x1>3);
-                                                 if(a[a2.x1][a2.y1]=='-' && a[a2.x1+1][a2.y1]=='-' && a[a2.x1+2][a2.y1]=='-'){
-                                                   navirePrecedent=0;
-                                                  a[a2.x1][a2.y1]='B';
-                                                  a[a2.x1+1][a2.y1]='B';
-                                                  a[a2.x1+2][a2.y1]='B';
-                                                  success++;
-                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
-                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
-                                                  gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
-                                               }
-                                              } while(navirePrecedent==1);
-                                            } break;
-                                         case 3:
-                                            {
-                                                do
-                                                {
-                                                    navirePrecedent=1;
-                                                  do
-                                                    {
-                                                    gotoxy(50,9);printf("donner les ccoordonne du navire Diagonal Ligne : ");
-                                                    gotoxy(50,10);scanf("%d",&a3.x1);
-                                                    gotoxy(50,11);printf("donner les coordonne  du navire Diagonal Diagonal colonne");
-                                                    gotoxy(50,12);scanf("%d",&a3.y1);
-                                                    gotoxy(50,10);printf("  ");
-                                                    gotoxy(50,12);printf("  ");
-
-                                                    } while(a3.y1>=4 || a3.x1>=4);
-                                                 if(a[a3.x1][a3.y1]=='-' && a[a3.x1+1][a3.y1+1]=='-' && a[a3.x1+2][a3.y1+2]=='-'){
-                                                   navirePrecedent=0;
-                                                   success++;
-                                                   a[a3.x1][a3.y1]='C';
-                                                   a[a3.x1+1][a3.y1+1]='C';
-                                                   a[a3.x1+2][a3.y1+2]='C';
-                                                   gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
-                                                   gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
-                                                   gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
-                                                 }
-                                                }while(navirePrecedent==1);
-                                            } break;
-                        }
-                     } while(success<=3);
+                         menu_positionnement(navire,a,success);
+                         //le role de la fonction munu _positionnement
             sleep(2);
             system("cls");
             printf("Vous avez  Deployer vos trois navires Avec succes  ");
@@ -186,26 +91,24 @@ do
                 gotoxy(50,14);printf(" ");
                 if(a[x][y]=='A' || a[x][y]=='B' || a[x][y]=='C' )
                 {
+                    gotoxy(50,20);printf("Navire %c touche ",a[x][y]);
                     if(a1.x1==x && a1.y1==y)
                     {
                         gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
                         gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
                         gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
-                        gotoxy(50,20);printf("Vous avez coulez le navire A");
                         SCORE+=3;
                     } else if(x==a2.x1 && a2.y1==y)
                     {
                        gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
                        gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
                        gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
-                       gotoxy(50,20);printf("Vous avez coulez le navire B");
                        SCORE+=3;
                     } else if(a3.x1==x && a3.y1==y)
                     {
                        gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
                        gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
                        gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
-                      gotoxy(50,20);printf("Vous avez coulez le navire C");
                       SCORE+=3;
                     }
                 } else
@@ -262,7 +165,6 @@ do
      srand(time(NULL));
     success=1;
     joueur1();
-
            while(success<=3)
            {
                choixOrdinateur=rand()%4+1;
@@ -298,12 +200,11 @@ do
                                 {
                                     if(Check_diagonal(a)==1)
                                     {
-                                        a3=Coordonnee_Pc_diagonal();
-                                        success++;
-
+                                         a3=Coordonnee_Pc_diagonal();
+                                         success++;
                                          gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
-                                          gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
-                                          gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
+                                         gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
+                                         gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
                                     }
                                 } break;
              }
@@ -311,65 +212,57 @@ do
           getch();
           system("cls");
           joueur1();
+
             SCORE=0;
             tentative=3;
-            while(SCORE<=9 && tentative>=0)
+            while(SCORE<=3)
             {
                 gotoxy(40,3);printf("il vous reste %d tentative ",tentative);
                 //voir si le joueur a bien saisi le debut de cchaque navire sinon il ya une diminution du score;
+                do{
                 gotoxy(50,10);printf("donner x : ");
                 gotoxy(50,11);scanf("%d",&x);
                 gotoxy(50,13);printf("donnee y : ");
                 gotoxy(50,14);scanf("%d",&y);
                 gotoxy(50,11);printf(" ");
                 gotoxy(50,14);printf(" ");
+                } while((x<0 || x>6) && (y<0 || y>5));
                ///pc
                if(a[x][y]=='A' || a[x][y]=='B' || a[x][y]=='C')
                   {
-                     if(a[x][y]=='A')
+                     if(a[x][y]=='A'  && a[x][y+1]=='A' && a[x][y+2] =='A' )
                      {
-                         SCORE+=3;
+                             SCORE++;
                          gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[x][y]);
                          gotoxy(4*(y+2)+5,2*x+7);printf("%c",a[x][y+1]);
                          gotoxy(4*(y+3)+5,2*x+7);printf("%c",a[x][y+2]);
-
                          gotoxy(50,20);printf("Vous avez touche le navire A");printf("\t\t\t");
-                     } else if(a[x][y]=='C')
+                     } else if(a[x][y]=='C' && (a[x+1][y+1]=='C' && a[x+2][y+2])=='C')
                            {
-                          SCORE+=3;
-                          gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[a3.x1][a3.y1]);
-                         gotoxy(4*(y+2)+5,2*x+9);printf("%c",a[a3.x1+1][a3.y1+1]);
-                         gotoxy(4*(y+3)+5,2*x+11);printf("%c",a[a3.x1+2][a3.y1+2]);
-                          gotoxy(50,20);printf("Vous avez touche le navire C");printf("\t\t\t");
-                            } else if(a[x][y]=='B')
+                            SCORE++;
+                            gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[a3.x1][a3.y1]);
+                            gotoxy(4*(y+2)+5,2*x+9);printf("%c",a[a3.x1+1][a3.y1+1]);
+                            gotoxy(4*(y+3)+5,2*x+11);printf("%c",a[a3.x1+2][a3.y1+2]);
+                            gotoxy(50,20);printf("Vous avez touche le navire C");printf("\t\t\t");
+                            } else if(a[x][y]=='B' && (a[x+1][y]=='B' && a[x+2][y]=='B'))
                             {
-                                SCORE+=3;
+                                SCORE++;
                                 gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[a2.x1][a2.y1]);
                                 gotoxy(4*(y+1)+5,2*x+9);printf("%c",a[a2.x1+1][a2.y1]);
                                 gotoxy(4*(y+1)+5,2*x+11);printf("%c",a[a2.x1+2][a2.y1]);
-                                 gotoxy(50,20);printf("Vous avez touche le navire B");printf("\t\t\t");
+                                gotoxy(50,20);printf("Vous avez touche le navire B");printf("\t\t\t");
                             }
-                  } else
-                  {
-                      SCORE-=3;
-                        gotoxy(4*(y+1)+5,2*x+7);printf("X");
-                        gotoxy(50,20);printf("RATE ");printf("                             ");//blanks deleting function in next script
-                        if(SCORE<0)
-                        {
-                            SCORE=0;
-                        }
-                  }
+                          } else
+                              {
+                                    gotoxy(4*(y+1)+5,2*x+7);printf("X");
+                                    gotoxy(50,20);printf("RATE ");printf("                             ");
+                              }
 
                 gotoxy(40,6);printf("Votre score actuel est : %d",SCORE);
-                tentative--;
-                if(SCORE==9)
+                 if(SCORE==3)
                      {
-                            printf("\nVous avez coulees tous les navires   ! !  ! \n");
+                            printf("\nVous avez mis tous les navires a terres   ! !  ! \n");
                             break;
-                     } else if(tentative<=0 && SCORE<9)
-                     {
-                         gotoxy(70,10);printf("Vous avez pas la chance LE PC GAGNE LE JEU ");
-                         break;
                      }
             }
 
@@ -451,8 +344,8 @@ void Menu()
        gotoxy(28,16);printf("ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ");
        gotoxy(29,17);puts("Selectionner votre choix ");
  }
-    void joueur1()
-    {
+void joueur1()
+{
           gotoxy(4,5);printf("   ³ 0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³");
          gotoxy(4,6);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
          gotoxy(4,7);printf(" 0 ³   ³   ³   ³   ³   ³   ³");
@@ -578,18 +471,6 @@ int Check_diagonal(char a[6][6])
         }
         return navirePrecedent;
 }
-char **matrice()
-{
-	int** a = (int**)malloc(3*sizeof(int*)); //allocation des colonnes
-    for(i=0;i<6;i++)
-    {
-        for(j=0;j<6;j++)
-        {
-            a[i][j]='-';
-        }
-    }
-    return a;
-}
 void delay(clock_t a)
 {
     clock_t start;
@@ -602,12 +483,12 @@ void delay(clock_t a)
 //les caracteres pour les navires :
 void intro()
 {
-    char names[]="Programmed By ME  hamza ouabiba :) ";
+    char names[]="Programmed By ME  i mean us 3ndak ti7 :) ";
      for(i=0;i<10;i++)
     {
         printf("\n");
     }
-    for(i=0;i<30;i++)
+    for(i=0;i<40;i++)
     {
         printf(" ");
     }
@@ -620,3 +501,124 @@ void intro()
     delay(1500);
     system("cls");
 }
+void menu_positionnement(int navire,char a[6][6],int success)
+{
+    Navire a1,a2,a3;
+    int placer=0;
+    int navirePrecedent=1;
+    int x=0,y=0;
+    char position;
+
+do{
+                         printf("\n");
+                         gotoxy(50,1);printf("Donner le Positionnement de votre navire numero %d  \n",success);
+                         gotoxy(50,2);printf("1=HORIZONTAL\n");
+                         gotoxy(50,3);printf("2=VERTICAL\n");
+                         gotoxy(50,4);printf("3=DIAGONAL\n");
+                         gotoxy(50,5);printf("  ");
+                         gotoxy(50,5);scanf("%d",&navire);
+    switch(navire)
+    {
+    case 1:
+        {
+            //le cas du navire horizontal :
+            x=0;
+            y=0;
+                                          do
+                                                {
+                                                     navirePrecedent=1;
+                                                           do{
+                                                             placer=0;
+                                                             gotoxy(4*(y+1)+5,2*x+7);
+                                                             position=getch();
+                                                             switch(position)
+                                                                {
+                                                                    case 72: if(x>0)x--;break;
+                                                                    case 80: if(x<5)x++;break;
+                                                                    case 77: if(y<5)y++;break;
+                                                                    case 75: if(y>0)y--;break;
+                                                                    case 13: placer=1;break;
+                                                                 }
+                                                             }while(placer!=1 || y>3);
+                                                 if(a[x][y]=='-' && a[x][y+1]=='-' && a[x][y+2]=='-'){
+                                                    navirePrecedent=0;//la valeur va changer lors du deploiement d'un certain navire
+                                                    a[x][y]='A';
+                                                    a[x][y+1]='A';
+                                                    a[x][y+2]='A';
+                                                    success++;
+                                                    gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[x][y]);
+                                                    gotoxy(4*(y+2)+5,2*x+7);printf("%c",a[x][y+1]);
+                                                    gotoxy(4*(y+3)+5,2*x+7);printf("%c",a[x][y+2]);
+                                                           }
+                                                    } while(navirePrecedent==1);
+    } break;
+    case 2:
+        {
+            x=0;
+            y=0;
+                                do
+                                                {
+                                                   navirePrecedent=1;
+                                                   placer=0;
+                                                  do
+                                                   {
+                                                   gotoxy(4*(y+1)+5,2*x+7);
+                                                   position=getch();
+                                                   switch(position)
+                                                     {
+                                                       case 72: if(x>0)x--;break;
+                                                       case 80: if(x<5)x++;break;
+                                                       case 77: if(y<5)y++;break;
+                                                       case 75: if(y>0)y--;break;
+                                                       case 13: placer=1;break;
+                                                      }
+                                                  }while(placer!=1 || x>3);
+                                                 if(a[x][y]=='-' && a[x+1][y]=='-' && a[x+2][y]=='-'){
+                                                   navirePrecedent=0;
+                                                   success++;
+                                                  a[x][y]='B';
+                                                  a[x+1][y]='B';
+                                                  a[x+2][y]='B';
+                                                  gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[x][y]);
+                                                  gotoxy(4*(y+1)+5,2*x+9);printf("%c",a[x+1][y]);
+                                                  gotoxy(4*(y+1)+5,2*x+11);printf("%c",a[x+2][y]);
+                                               }
+                                              } while(navirePrecedent==1);
+        } break;
+         case 3:
+             {
+                 x=0;
+                 y=0;
+                 do
+                                                {
+                                                    placer=0;
+                                                    navirePrecedent=1;
+                                                  do
+                                                    {
+                                                    gotoxy(4*(y+1)+5,2*x+7);
+                                                    position=getch();
+                                                   switch(position)
+                                                     {
+                                                       case 72: if(x>0)x--;break;
+                                                       case 80: if(x<5)x++;break;
+                                                       case 77: if(y<5)y++;break;
+                                                       case 75: if(y>0)y--;break;
+                                                       case 13: placer=1;break;
+                                                      }
+                                                  }while(placer!=1 || y>3 || x>3);
+                                                 if(a[x][y]=='-' && a[x+1][y+1]=='-' && a[x+2][y+2]=='-'){
+                                                   navirePrecedent=0;
+                                                   success++;
+                                                   a[x][y]='C';
+                                                   a[x+1][y+1]='C';
+                                                   a[x+2][y+2]='C';
+                                                   gotoxy(4*(y+1)+5,2*x+7);printf("%c",a[x][y]);
+                                                   gotoxy(4*(y+2)+5,2*x+9);printf("%c",a[x+1][y+1]);
+                                                   gotoxy(4*(y+3)+5,2*x+11);printf("%c",a[x+2][y+2]);
+                                                 }
+                                                }while(navirePrecedent==1);
+             } break;
+      }
+    } while(success<=3);
+}
+//les caracteres pour les navires :
