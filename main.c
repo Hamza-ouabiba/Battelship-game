@@ -4,7 +4,6 @@
 #include<stdlib.h>
 #include<time.h>
 #include<windows.h>
-#include<mmsystem.h>
 #include "JEU.h"
 int main()
  {
