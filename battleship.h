@@ -46,7 +46,8 @@ void tableau(void);
 void regleGeneral(void);
 void Pseudo();
 int choixOrdinateur();
-void choix_ordi_vs_joueur(char a[6][6]);
+void choix_ordi_vs_joueur();
+int scan_value();
 void choix_utilisateur(int score);
 
 void Menu()
@@ -138,17 +139,19 @@ int Coordonnee_Pc_Vertocal()   //choisir les coord avec une fonction puis les co
         srand(time(NULL));
         do{
                    do{
-                     a2.x1=rand()%6;
-                    }while(a2.x1<0 || a2.x1>3);
+                     nav2[B].x1=rand()%6;
+                    }while(nav2[B].x1<0 || nav2[B].x1>3);
                      do{
-                                 a2.y1=rand()%4;
-                      }while( a2.y1<0 ||  a2.y1>5);
-                if(a[a2.x1][a2.y1]=='-' && a[a2.x1+1][a2.y1]=='-' && a[a2.x1+2][a2.y1]=='-'){
-                                                   navirePrecedent=0;
-                                                  a[a2.x1][a2.y1]='B';
-                                                  a[a2.x1+1][a2.y1]='B';
-                                                  a[a2.x1+2][a2.y1]='B';
-                                               }
+                               nav2[B].y=rand()%4;
+                      }while( nav2[B].y<0 ||  nav2[B].y>5);
+                if(a[nav2[B].x1][nav2[B].y]=='-' && a[nav2[B].x1+1][nav2[B].y]=='-' && a[nav2[B].x1+2][nav2[B].y]=='-' )
+                           {  navirePrecedent=0;i++;
+                             a[nav2[B].x1][nav2[B].y]='B';
+                             a[nav2[B].x1+1][nav2[B].y]='B';
+                             a[nav2[B].x1+2][nav2[B].y]='B';
+                             /////////////////////B////////////////////
+                             B++;
+                          }
                      } while(navirePrecedent==1);
             return navirePrecedent;
 }
@@ -160,17 +163,16 @@ int Coordonnee_Pc_diagonal()   //choisir les coord avec une fonction puis les co
         srand(time(NULL));
         do{
                    do{
-                     a3.x1=rand()%6;
-                    }while(a3.x1<0 || a3.x1>5);
+                     nav3[C].x1=rand()%6;
+                    }while(nav3[C].x1<0 || nav3[C].x1>5);
                      do{
-                                 a3.y1=rand()%4;
-                      }while( a3.y1<0 ||  a3.y1>3);
-                if(a[a3.x1][a3.y1]=='-' && a[a3.x1+1][a3.y1]=='-' && a[a3.x1+2][a3.y1]=='-'){
-                                                   navirePrecedent=0;
-                                                  a[a3.x1][a3.y1]='C';
-                                                  a[a3.x1+1][a3.y1+1]='C';
-                                                  a[a3.x1+2][a3.y1+2]='C';
-                                               }
+                                 nav3[C].y1=rand()%4;
+                      }while( nav3[C].y1<0 || nav3[C].y1>3);
+                if(a[nav3[C].x1][nav3[C].y1]=='-' && a[nav3[C].x1+1][nav3[C].y1+1]=='-' && a[nav3[C].x1+2][nav3[C].y1+2]=='-')
+                     { navirePrecedent=0;i++;
+                       a[nav3[C].x1][nav3[C].y1]=a[nav3[C].x1+1][nav3[C].y1+1]=a[nav3[C].x1+2][nav3[C].y1+2]='C';
+                       C++;
+                     }
                      } while(navirePrecedent==1);
             return navirePrecedent;
                         //checker :
@@ -181,17 +183,18 @@ int Coordonnee_Pc_horizontal()   //choisir les coord avec une fonction puis les 
         srand(time(NULL));
         do{
                    do{
-                     a1.x1=rand()%6;
-                    }while(a1.x1<0 || a1.x1>5);
+                     nav1[A].x=rand()%6;
+                    }while(nav1[A].x<0 || nav1[A].x>5);
                      do{
-                                 a1.y1=rand()%4;
-                      }while( a1.y1<0 ||  a1.y1>3);
-                if(a[a1.x1][a1.y1]=='-' && a[a1.x1+1][a1.y1]=='-' && a[a1.x1+2][a1.y1]=='-'){
-                                                   navirePrecedent=0;
-                                                  a[a1.x1][a1.y1]='A';
-                                                  a[a1.x1][a1.y1+1]='A';
-                                                  a[a1.x1][a1.y1+2]='A';
-                                               }
+                                 nav1[A].y1=rand()%4;
+                      }while( nav1[A].y1<0 ||  nav1[A].y1>3);
+                if(a[nav1[A].x][nav1[A].y1]=='-' && a[nav1[A].x][nav1[A].y1+1]=='-' && a[nav1[A].x][nav1[A].y1+2]=='-' )
+                              { navirePrecedent=0;i++;
+                                a[nav1[A].x][nav1[A].y1]='A';
+                                a[nav1[A].x][nav1[A].y1+1]='A';
+                                a[nav1[A].x][nav1[A].y1+2]='A';
+                                A++;
+                              }
                      } while(navirePrecedent==1);
             return navirePrecedent;
                         //checker :
@@ -575,7 +578,7 @@ void j2()
 }
 
 }
-void choix_ordi_vs_joueur(char a[6][6])
+void choix_ordi_vs_joueur()
 {
        int choixOrdinateur;
         int x,y;
@@ -590,7 +593,7 @@ void choix_ordi_vs_joueur(char a[6][6])
                          }
                      }
 
-    tableauOrdinateur();
+    tableau();
 
                choixOrdinateur=rand()%4+1;
             while(success<=3){
@@ -602,9 +605,7 @@ void choix_ordi_vs_joueur(char a[6][6])
                                                    //horizontal
                                      if(Coordonnee_Pc_horizontal()==0)
                                      {
-                                         gotoxy(4*(a1.y1+1)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1]);
-                                         gotoxy(4*(a1.y1+2)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+1]);
-                                         gotoxy(4*(a1.y1+3)+5,2*a1.x1+7);printf("%c",a[a1.x1][a1.y1+2]);
+
                                          success++;
                                      }
 
@@ -614,9 +615,7 @@ void choix_ordi_vs_joueur(char a[6][6])
                                    if(Coordonnee_Pc_Vertocal()==0)
                                    {
                                        success++;
-                                       gotoxy(4*(a2.y1+1)+5,2*a2.x1+7);printf("%c",a[a2.x1][a2.y1]);
-                                       gotoxy(4*(a2.y1+1)+5,2*a2.x1+9);printf("%c",a[a2.x1+1][a2.y1]);
-                                       gotoxy(4*(a2.y1+1)+5,2*a2.x1+11);printf("%c",a[a2.x1+2][a2.y1]);
+
 
                                    }
                                 } break;
@@ -625,9 +624,7 @@ void choix_ordi_vs_joueur(char a[6][6])
                                     if(Coordonnee_Pc_diagonal()==0)
                                     {
                                          success++;
-                                         gotoxy(4*(a3.y1+1)+5,2*a3.x1+7);printf("%c",a[a3.x1][a3.y1]);
-                                         gotoxy(4*(a3.y1+2)+5,2*a3.x1+9);printf("%c",a[a3.x1+1][a3.y1+1]);
-                                         gotoxy(4*(a3.y1+3)+5,2*a3.x1+11);printf("%c",a[a3.x1+2][a3.y1+2]);
+
                                     }
                                 } break;
 
@@ -737,6 +734,8 @@ void choix_utilisateur(int score)
 
     //le tour pour  l'utilisateur :
 }
+
+
 
 
 #endif // battleship_H_INCLUDED
