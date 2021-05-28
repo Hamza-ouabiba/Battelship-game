@@ -17,8 +17,8 @@ int main()
         int choix;
         system("COLOR 4");
         intro();
-do
-{
+
+do{
     Debut:
 
     system("cls");
@@ -62,54 +62,30 @@ do
    case 3:{choix_ordi_vs_joueur(a);choix_utilisateur(score);}break;
     case 4:
     {
+    do{
         puts("Voulez-vous vraiment quitter le jeu O/N?");
         fflush(stdin);
         scanf("%c",&quitter);
-        if(quitter=='o' || quitter=='O')
+        if(quitter!='o' && quitter!='O' && quitter!='N' && quitter!='n')
         {
-            exit(0);
-        } else if(quitter=='N' || quitter=='n')
-        {
-            system("cls");
-            goto Debut;
-        } else
-        {
-            do
-            {
-                printf("Veuillez resaisir  ------>");
-                fflush(stdin);
-                scanf("%c",&quitter);
-            } while(quitter!='o' && quitter!='O' && quitter!='N' && quitter!='n');
-            if(quitter=='o' || quitter=='O')
+            printf("Choix erronee !! \n");
+        }
+    } while(quitter!='o' && quitter!='O' && quitter!='N' && quitter!='n');
+            if(quitter=='O' || quitter=='o' && scanf("%c",&quitter)==1)
             {
                 exit(0);
             } else
             {
-                system("cls");
-                goto Debut;
+                  goto Debut;
             }
-        }
     } break;
     default:
         {
-            do
-            {
-              printf("     ");
-              printf("choix erronee veuillez resaisir ");
-              scanf("%d",&choix);
-            } while(choix>4);
-            system("cls");
-            goto Debut;
-
+           printf("choix erronee");
+            getch();
         }
    }
-
-         gotoxy(5,50);printf("rejouer Repondez par oui ou non  !!");
-         fflush(stdin);
-         scanf("%c",&rejouer);
-
- } while(rejouer=='o' || rejouer=='O');
- getch();
+ }while(choix<1 || choix>4);
  return 0;
 }
 
