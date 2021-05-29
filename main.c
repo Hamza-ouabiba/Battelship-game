@@ -7,46 +7,46 @@
 #include "JEU.h"
 int main()
  {
-   //mettre un score :
-    //une fois le joueur 2 rate un navire -> diminution du score par exemple ce cas le score sur 40 /
-        //traiter les ca_  s des characteres  de navires :
+   //une fois le joueur 2 rate un navire -> diminution du score par exemple ce cas le score sur 40 /
+   //traiter les ca_  s des characteres  de navires :
         char rejouer,quitter;
         int i,j;
         int re;
         int choix;
-        system("COLOR 4");
+        system("COLOR 2");
         intro();
-
+         Debut:
 do{
-    Debut:
-
-    system("cls");
-    Menu();
-    gotoxy(28,18);printf("  ");
-    gotoxy(28,18);scanf("%d",&choix);
- switch(choix)
-    {
-            case 1:
-                {
-                     Pseudo();
-                      for(i=0;i<6;i++)
+     for(i=0;i<6;i++)
                      {
                          for(j=0;j<6;j++)
                          {
                              a[i][j]='-';
                          }
                      }
+    system("cls");
+    Menu();
+    do{
+    gotoxy(28,18);printf("  ");scanf("%d",&choix);
+   }while(choix<1 || choix>4);
+ switch(choix)
+    {
+            case 1:
+                {
+                     Pseudo();
                      j1();
-                         //le role de la fonction munu _positionnement
                      j2();
-        } break;
+                     sleep(1);
+                     break;
+             } break;
    case 2:
        {
            system("cls");
            regleGeneral();
            do
            {
-               printf("Pour revenir Au menu Principal Appuyer sur 1 : ");scanf("%d",&re);
+               printf("Pour revenir Au menu Principal Appuyer sur 1 : ");
+               scanf("%d",&re);
                if(re==1)
                {
                    system("cls");
@@ -58,7 +58,7 @@ do{
            } while(choix!=1);
        } break;
 
-   case 3:{choix_ordi_vs_joueur(a);choix_utilisateur(score);}break;
+   case 3:{system("cls");choix_ordi_vs_joueur();j2();getch();break;}break;
     case 4:
     {
     do{
@@ -84,7 +84,10 @@ do{
             getch();
         }
    }
- }while(choix<1 || choix>4);
+ printf("Pour rejouer taper o : ");
+ fflush(stdin);
+ scanf("%c",&rejouer);
+ }while(rejouer=='O' || rejouer=='_o');
  return 0;
 }
 
