@@ -10,6 +10,7 @@ typedef struct
     char nom[20];
     int Score;//creation d'une structure qui stocke le nom des deux joueurs
     int couleur;
+    int age;
 } player;
 Navire nav1[3];
 Navire nav2[3];
@@ -102,12 +103,15 @@ void Pseudo()
      gotoxy(10,7);printf("³ PSEUDO :                 ³                       ³\n");
 	 gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
      gotoxy(10,9);printf("³ AGE :                    ³                       ³\n");
-    gotoxy(10,11);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
-	gotoxy(10,12);printf("³ COULEUR  :               ³                       ³\n");
-    gotoxy(10,13);printf("ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n");
-                     gotoxy(10,7);gets(p1.nom);
-                     gotoxy(30,7);gets(p2.nom);
-                     gotoxy(,)
+    gotoxy(10,10);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+	gotoxy(10,11);printf("³ COULEUR :                ³                       ³\n");
+    gotoxy(10,12);printf("ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n");
+                     gotoxy(20,7);gets(p1.nom);
+                     gotoxy(40,7);gets(p2.nom);
+                     gotoxy(20,9);scanf("%d",&p1.age);
+                     gotoxy(40,9);scanf("%d",&p2.age);
+                     gotoxy(20,11);scanf("%d",&p1.couleur);
+                     gotoxy(40,11);scanf("%d",&p2.couleur);
                      sleep(2);
                      system("cls");
 
@@ -188,7 +192,7 @@ void delay(clock_t a)
 //les caracteres pour les navires :
 void intro()
 {
-    char names[]="Bienvenue a bataille Navale ";
+    char names[]="Bienvenue a bataille navale";
      for(i=0;i<10;i++)
     {
         printf("\n");
@@ -215,7 +219,7 @@ void j1()
     int choix_navire;
     char position;
     int x,y;
-
+    textcolor(p1.couleur);
     x=y=0;
     A=B=C=0;
     tableau();
@@ -376,10 +380,11 @@ void j2()
     int suc;
     int choix;
     time_t  depart,arrivee;
+    textcolor(p2.couleur);
      system("cls");
-     printf("choix:taper 1 pour level 1(FACILE)  : :\n");
-     printf("choix:taper 2 pour level 2(MOYEN): : \n");
-     printf("choix:taper 3 pour level 3 (DIFFICILE): : \n");
+     printf("choix:taper 1 pour level 1(FACILE) :\n");
+     printf("choix:taper 2 pour level 2(MOYEN) : \n");
+     printf("choix:taper 3 pour level 3 (DIFFICILE) : \n");
      scanf("%d",&choix);
      system("cls");
    //
