@@ -1,5 +1,5 @@
-#ifndef battleship_H_INCLUDED
-#define battleship_H_INCLUDED
+#ifndef JEU_H_INCLUDED
+#define JEU_H_INCLUDED
 typedef struct
 {
          int x;
@@ -10,14 +10,15 @@ typedef struct
     char nom[20];
     int Score;//creation d'une structure qui stocke le nom des deux joueurs
 } player;
-int A,B,C;
 Navire nav1[3];
 Navire nav2[3];
 Navire nav3[3];
+player p1,p2;
 void tableauOrdinateur();
  int i;
  int j;
 char a[6][6];
+int A,B,C;
 int score;
 int CoordonnePcHorizontal();  //choisir les coord avec une fonction puis les controlers dans une autre fonction
 int Coordonnee_Pc_Vertocal();
@@ -76,21 +77,23 @@ void tableau()
 void regleGeneral(){
         printf("\t\t\t\tRegle generale du jeu \n") ;
         printf ("REGLES DU JEU:\n") ;
-	    printf ("1) Il s'agit d'un jeu ï¿½ deux joueurs, mais chaque joueur utilise son propre ordinateur et sa propre instance de ce programme") ;
-	    printf ("2. le joueur sera invitï¿½ ï¿½ choisir la formation initiale de ses navires\n") ;
+	    printf ("1. Il s'agit d'un jeu qui contient deux joueurs,et il y a aussi possibilites de jouer avec l'ordinateur comment etant le 1er joueur qui place les navires") ;
+	    printf ("2. le joueur  choisis les informations (coordonnees) initiale de ses navires\n") ;
 	    printf (" pour le plateau de jeu \n") ;
-	    printf ("3. Il y a 6 types de formations a placer \n") ;
-	    printf ("4. la grille des navires est imprim%ce et l'utilisateur doit choisir lequel passe en premier : lui-meme ou l'adversaire \n",120) ;
-	    printf ("5. l'ordinateur sï¿½lectionne alï¿½atoirement l'endroit oï¿½ le prochain tir du joueur sera effectuï¿½ (coordonnï¿½es en GREC) \n") ;
-	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonnï¿½es du tir entrant (en lettres grecques)\n") ;
+	    printf ("3. Il y a 3 types de formations a placer \n") ;
+	    printf ("4. la grille des navires est imprim%ce et l'utilisateur doit choisir  \n",120) ;
+	    printf ("5. Dans le cas d'ordinateur il selectionne aleatoirement l'endroit ou le prochain tir du joueur sera effectuee (coordonnees en GREC) \n") ;
+	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonnees du tir en manipulant les fleches de son clavier\n") ;
 	    printf ("7. Le jeu commence alors que chaque joueur tente de deviner l'emplacement des navires\n") ;
 	    printf (" du plateau de jeu de l'adversaire ; [chacaractere du navire] touche et [X] manque\n") ;
-	    printf ("8. Le premier joueur qui a devine l'emplacement de tous les navires a gagne...\n") ;
+	    printf (" 8. Le premier joueur qui a devine l'emplacement de tous les navires a gagne mais qui aussi depend de chaque niveau...\n") ;
+	    printf("  9.level 1 il ya la diminution du score avec 1 sur l point \n");
+	    printf(" 10.level 2 il ya l'intervention du temps dans ce cas la contrainte du tamps est: 10 (S) \n");
+	    printf(" 11.level 3 il ya l'intervention du temps dans ce cas la contrainte du temps et la contrainte du score avec le score a 6points \n");
     }
 void Pseudo()
 {
     //a mettre un tableau pour afficher les infos de chque joueuer
-                     player p1,p2;
                      system("cls");
                      gotoxy(10,4);printf("donner le nom du joueur numero 1  ");
                      gotoxy(10,5);gets(p1.nom);
@@ -122,8 +125,6 @@ int Coordonnee_Pc_Vertocal()   //choisir les coord avec une fonction puis les co
                      } while(navirePrecedent==1);
             return navirePrecedent;
 }
-
-
 int Coordonnee_Pc_diagonal()   //choisir les coord avec une fonction puis les controlers dans une autre fonction
 {
         int navirePrecedent=1;
@@ -168,9 +169,9 @@ int Coordonnee_Pc_horizontal()   //choisir les coord avec une fonction puis les 
 }
 void delay(clock_t a)
 {
-    clock_t start;
-    start  = clock();
-    while(clock()-start<a)
+    clock_t depart;
+    depart  = clock();
+    while(clock()-depart<a)
     {
 
     }
@@ -209,11 +210,12 @@ void j1()
     x=y=0;
     A=B=C=0;
     tableau();
+    gotoxy(80,1);printf("%s VA EMPLACER CES NAVIRES ",p1.nom);
             gotoxy(92,8);printf(" ");
             gotoxy(80,4);printf("choisir le type de navire:");
-            gotoxy(80,5);printf("-1 Navire A HORIZONTAL");
-            gotoxy(80,6);printf("-2 Navire B VERTICAL");
-            gotoxy(80,7);printf("-3 Navire C DIAGONAL");
+            gotoxy(80,5);printf("-1  A (Porte-avions)");
+            gotoxy(80,6);printf("-2  B (Croiseur)");
+            gotoxy(80,7);printf("-3  C (Contre-torpilleurs)");
             gotoxy(80,8);printf("Votre choix:");
     do{
       do{
@@ -225,7 +227,7 @@ void j1()
       {
        case 1:
            { // A indice de tableau
-             gotoxy(15,1);printf("******Navire HORIZONTAL*****");
+             gotoxy(15,1);printf("******Navire Porte-avions*****");
              gotoxy(15,2);printf("Placer l'emplacement de vavire A");
             do{c=1;
                   do{
@@ -254,6 +256,12 @@ void j1()
                                 gotoxy((nav1[A].y+2)*4+20,nav1[A].x*2+6);printf("%c",a[nav1[A].x][nav1[A].y+2]);
                                 A++;
                               }
+                              else
+                              {
+                                 gotoxy(40,20);printf("Navire exite deja  ");
+                                 delay(400);
+                                 gotoxy(40,20);printf("                                ");
+                              }
             }while(c!=0);
 
             getch();
@@ -261,7 +269,7 @@ void j1()
 
                 /////////////////////////////////////////////////////////////
         case 2:
-         {      gotoxy(15,1);printf("******Navire B VERTICAL*****");
+         {      gotoxy(15,1);printf("******Navire B Croiseur*****");
                 gotoxy(15,2);printf("Placer l'emplacement de vavire B");
                 c=1;
            do{
@@ -292,13 +300,19 @@ void j1()
                              gotoxy(nav2[B].y*4+20,(nav2[B].x+2)*2+6);printf("%c",a[nav2[B].x+2][nav2[B].y]);
                              B++;
                           }
+                          else
+                              {
+                                 gotoxy(40,20);printf("Navire exite deja ");
+                                 delay(400);
+                                 gotoxy(40,20);printf("                                ");
+                              }
 
                }while(c!=0);
                 getch();
          }break;
 
       case 3:
-        {    gotoxy(15,1);printf("******Navire C DIAGONAL*****");
+        {    gotoxy(15,1);printf("******Navire C Contre-torpilleurs*****");
              gotoxy(15,2);printf("Placer l'emplacement de vavire C");
              c=1;
           do{
@@ -328,6 +342,12 @@ void j1()
                       gotoxy((nav3[C].y+2)*4+20,(nav3[C].x+2)*2+6);printf("%c",a[nav3[C].x+2][nav3[C].y+2]);
                        C++;
                      }
+                     else
+                              {
+                                 gotoxy(40,20);printf("Navire exite deja ");
+                                 delay(400);
+                                 gotoxy(40,20);printf("                                ");
+                              }
 
              }while(c!=0);
               getch();
@@ -354,11 +374,11 @@ void j2()
      scanf("%d",&choix);
      system("cls");
    //
-     gotoxy(14,1);printf("\**************JOUEUR2*************");
+ gotoxy(14,1);printf("\**************JOUEUR2*************");
  switch(choix)
   {
     case 1: {
-        score=0;
+        p2.Score=0;
           c=x=y=i=0;
           tableau();time(&depart);
       do{
@@ -383,7 +403,6 @@ void j2()
               if(a[x][y]=='A' || a[x][y]=='B' || a[x][y]=='C')
                {
                         gotoxy(5,20);printf("Navire(%c) touche\n",a[x][y]);
-
                      if(a[x][y]=='A')
                         {
                           for(k=0;k<A;k++)
@@ -395,7 +414,7 @@ void j2()
                                 gotoxy((nav1[k].y+2)*4+20,nav1[k].x*2+6);printf("%c",a[nav1[k].x][nav1[k].y+2]);
                                 gotoxy(y*4+20,x*2+6);
                                 Ai[k]=1;///le navire est placÐ˜
-                                score+=3;
+                                p2.Score+=3;
                               }
                             }
                         }
@@ -410,7 +429,7 @@ void j2()
                                gotoxy(nav2[k].y*4+20,(nav2[k].x+2)*2+6);printf("%c",a[nav2[k].x+2][nav2[k].y]);
                                gotoxy(y*4+20,x*2+6);
                                Bi[k]=1;///le navire est placÐ˜
-                               score+=3;
+                               p2.Score+=3;
                               }
                            }
                       }
@@ -426,7 +445,7 @@ void j2()
                                gotoxy((nav3[k].y+2)*4+20,(nav3[k].x+2)*2+6);printf("%c",a[nav3[k].x+2][nav3[k].y+2]);
                                gotoxy(y*4+20,x*2+6);
                                Ci[k]=1;///le navire est placÐ˜
-                               score+=3;
+                               p2.Score+=3;
                                break;
                                  }
                            }
@@ -436,26 +455,28 @@ void j2()
                    gotoxy(y*4+19,x*2+6);printf("X");
                    gotoxy(5,21);printf("rate!");
                      if(score>0){
-                        score--;
+                        p2.Score--;
                        }
                    else if(score<0){
-                        score=0;
+                        p2.Score=0;
                        }
                   }
 
         }while(i!=3);
         time(&arrivee);
-        if(difftime(arrivee,depart)>10)
-        {
+        if(p2.Score>10){
             gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
-            gotoxy(80,5);printf("|score:%d|",score);
-            system("cls");
-            gotoxy(50,20);printf("vous avez perdus");
+            gotoxy(80,5);printf("|score:%d|",p2.Score);
+            gotoxy(50,20);printf("%s a perdus le jeu ",p2.nom);
+            gotoxy(50,21);printf("%s a gagne le jeu ",p1.nom);
             getch();
             system("cls");
         } else
         {
-            gotoxy(80,20);printf("vous avez gagnee ");
+            gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
+            gotoxy(80,5);printf("|score:%d|",p2.Score);
+            gotoxy(50,20);printf("%s a perdus le jeu ",p1.nom);
+            gotoxy(50,21);printf("%s a gagne le jeu ",p2.nom);
             getch();
             system("cls");
         }
@@ -463,7 +484,7 @@ void j2()
 
    case 2:
          {
-             score=0;
+             p2.Score=0;
              gotoxy(60,20);printf("la contrainte du temps est : 10 (S)");
              //level 2:
                                 c=x=y=i=0;
@@ -502,7 +523,7 @@ void j2()
                                 gotoxy((nav1[k].y+2)*4+20,nav1[k].x*2+6);printf("%c",a[nav1[k].x][nav1[k].y+2]);
                                 gotoxy(y*4+20,x*2+6);
                                 Ai[k]=1;///le navire est placÐ˜
-                                score+=3;
+                                p2.Score+=3;
                               }
                             }
                         }
@@ -517,7 +538,7 @@ void j2()
                                gotoxy(nav2[k].y*4+20,(nav2[k].x+2)*2+6);printf("%c",a[nav2[k].x+2][nav2[k].y]);
                                gotoxy(y*4+20,x*2+6);
                                Bi[k]=1;///le navire est placÐ˜
-                               score+=3;
+                               p2.Score+=3;
                               }
                            }
                       }
@@ -533,7 +554,7 @@ void j2()
                                gotoxy((nav3[k].y+2)*4+20,(nav3[k].x+2)*2+6);printf("%c",a[nav3[k].x+2][nav3[k].y+2]);
                                gotoxy(y*4+20,x*2+6);
                                Ci[k]=1;///le navire est placÐ˜
-                               score+=3;
+                               p2.Score+=3;
                                break;
                                  }
                            }
@@ -542,11 +563,11 @@ void j2()
               else{
                    gotoxy(y*4+19,x*2+6);printf("X");
                    gotoxy(5,21);printf("rate!");
-                     if(score>0){
-                        score-=2;
+                     if(p2.Score>0){
+                        p2.Score-=2;
                        }
                    else if(score<0){
-                        score=0;
+                        p2.Score=0;
                        }
                   }
 
@@ -556,16 +577,18 @@ void j2()
              if(difftime(arrivee,depart)>10)
              {
                  gotoxy(80,4);printf("|TIME:%.2f|",difftime(arrivee, depart));
-                  gotoxy(80,5);printf("|score:%d|",score);
-                    gotoxy(20,20);printf("vous avez perdus !!");
+                  gotoxy(80,5);printf("|score:%d|",p2.Score);
+                    gotoxy(50,20);printf("%s a perdus le jeu ",p2.nom);
+                     gotoxy(50,21);printf("%s a gagne le jeu ",p1.nom);
                     getch();
                     system("cls");
 
              } else
              {
                  gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
-                  gotoxy(80,5);printf("|score:%d|",score);
-                    gotoxy(20,20);printf("vous avez gagne !! ");
+                  gotoxy(80,5);printf("|score:%d|",p2.Score);
+                    gotoxy(50,20);printf("%s a perdus le jeu ",p1.nom);
+                     gotoxy(50,21);printf("%s a gagne le jeu ",p2.nom);
                     getch();
                     system("cls");
              }
@@ -573,7 +596,7 @@ void j2()
      } break;
                case 3:
                     {
-                        score=0;
+                        p1.Score=0;
                               gotoxy(60,20);printf("la contrainte du temps est : 8 (S)");
                               gotoxy(60,21);printf("la contrainte du score est : 6 (S)");
                                 c=x=y=i=0;
@@ -612,7 +635,7 @@ void j2()
                                 gotoxy((nav1[k].y+2)*4+20,nav1[k].x*2+6);printf("%c",a[nav1[k].x][nav1[k].y+2]);
                                 gotoxy(y*4+20,x*2+6);
                                 Ai[k]=1;///le navire est placÐ˜
-                                score+=2;
+                                p2.Score+=2;
                               }
                             }
                         }
@@ -627,7 +650,7 @@ void j2()
                                gotoxy(nav2[k].y*4+20,(nav2[k].x+2)*2+6);printf("%c",a[nav2[k].x+2][nav2[k].y]);
                                gotoxy(y*4+20,x*2+6);
                                Bi[k]=1;///le navire est placÐ˜
-                               score+=2;
+                               p2.Score+=2;
                               }
                            }
                       }
@@ -643,7 +666,7 @@ void j2()
                                gotoxy((nav3[k].y+2)*4+20,(nav3[k].x+2)*2+6);printf("%c",a[nav3[k].x+2][nav3[k].y+2]);
                                gotoxy(y*4+20,x*2+6);
                                Ci[k]=1;///le navire est placÐ˜
-                               score+=3;
+                               p2.Score+=3;
                                break;
                                  }
                            }
@@ -651,7 +674,7 @@ void j2()
                 }
               else{
                    gotoxy(y*4+19,x*2+6);printf("X");
-                   gotoxy(5,21);printf("rate!");
+                   gotoxy(5,21);printf("Rate!");
                    break;
                   }
             //la contrainte du score qui est 6:
@@ -661,14 +684,16 @@ void j2()
              if(score==6 && difftime(arrivee,depart)<=6)
             {
                 gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
-                gotoxy(80,5);printf("|score:%d|",score);
-                gotoxy(80,20);printf("BRAVO vous avez gagne en ne ratant aucun navire ");
+                gotoxy(80,5);printf("|score:%d|",p2.Score);
+                gotoxy(50,20);printf("BRAVO %s vous avez ecoulees tous les navires !!!",p2.nom);
+                gotoxy(50,21);printf("%s a perdus le jeu ",p1.nom);
                 system("cls");
             } else
             {
                 gotoxy(80,4);printf("|TIME:%.2f|",difftime(arrivee, depart));
-                gotoxy(80,5);printf("|score:%d|",score);
-                printf("Vous avez Perdus ");
+                gotoxy(80,5);printf("|score:%d|",p2.Score);
+                gotoxy(50,20);printf("%s a gagne le jeu ",p1.nom);
+                gotoxy(50,21);printf("%s a perdus le jeu ",p1.nom);
                 getch();
                 system("cls");
             }
@@ -718,6 +743,4 @@ void choix_ordi_vs_joueur()
            }
          }
 }
-
-
-#endif // battleship_H_INCLUDED
+#endif // JEU_H_INCLUDED
