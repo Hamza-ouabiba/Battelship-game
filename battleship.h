@@ -9,6 +9,7 @@ typedef struct
 {
     char nom[20];
     int Score;//creation d'une structure qui stocke le nom des deux joueurs
+    int couleur;
 } player;
 Navire nav1[3];
 Navire nav2[3];
@@ -61,7 +62,7 @@ void tableau()
 {
           gotoxy(15,4);;printf("   ³ 0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³");
           gotoxy(15,5);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
-          gotoxy(15,6);printf("   ³   ³   ³   ³   ³   ³   ³");
+          gotoxy(15,6);printf(" 0 ³   ³   ³   ³   ³   ³   ³");
           gotoxy(15,7);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
           gotoxy(15,8);printf(" 1 ³   ³   ³   ³   ³   ³   ³");
           gotoxy(15,9);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
@@ -95,10 +96,18 @@ void Pseudo()
 {
     //a mettre un tableau pour afficher les infos de chque joueuer
                      system("cls");
-                     gotoxy(10,4);printf("donner le nom du joueur numero 1  ");
-                     gotoxy(10,5);gets(p1.nom);
-                     gotoxy(70,4);printf("donner le nom du joueur numero 2  ");
-                     gotoxy(70,5);gets(p2.nom);
+     gotoxy(10,4);printf("ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n");
+	 gotoxy(10,5);printf("³          PLAYER 1        ³         PLAYER 2      ³\n");
+	 gotoxy(10,6);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+     gotoxy(10,7);printf("³ PSEUDO :                 ³                       ³\n");
+	 gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+     gotoxy(10,9);printf("³ AGE :                    ³                       ³\n");
+    gotoxy(10,11);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+	gotoxy(10,12);printf("³ COULEUR  :               ³                       ³\n");
+    gotoxy(10,13);printf("ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n");
+                     gotoxy(10,7);gets(p1.nom);
+                     gotoxy(30,7);gets(p2.nom);
+                     gotoxy(,)
                      sleep(2);
                      system("cls");
 
@@ -452,8 +461,9 @@ void j2()
                        }
                 }
               else{
-                   gotoxy(y*4+19,x*2+6);printf("X");
                    gotoxy(5,21);printf("rate!");
+                   delay(400);
+                   gotoxy(5,21);printf("      ");
                      if(score>0){
                         p2.Score--;
                        }
@@ -485,10 +495,12 @@ void j2()
    case 2:
          {
              p2.Score=0;
-             gotoxy(60,20);printf("la contrainte du temps est : 10 (S)");
              //level 2:
                                 c=x=y=i=0;
           tableau();
+          gotoxy(60,20);printf("la contrainte du temps est : 10 (S)");
+          delay(600);
+          gotoxy(60,20);printf("                                          ");
           time(&depart);
       do{
                  c++;
@@ -563,6 +575,9 @@ void j2()
               else{
                    gotoxy(y*4+19,x*2+6);printf("X");
                    gotoxy(5,21);printf("rate!");
+                   delay(400);
+                   gotoxy(5,21);printf("      ");
+
                      if(p2.Score>0){
                         p2.Score-=2;
                        }
@@ -577,30 +592,34 @@ void j2()
              if(difftime(arrivee,depart)>10)
              {
                  gotoxy(80,4);printf("|TIME:%.2f|",difftime(arrivee, depart));
-                  gotoxy(80,5);printf("|score:%d|",p2.Score);
-                    gotoxy(50,20);printf("%s a perdus le jeu ",p2.nom);
-                     gotoxy(50,21);printf("%s a gagne le jeu ",p1.nom);
-                    getch();
-                    system("cls");
+                 gotoxy(80,5);printf("|score:%d|",p2.Score);
+                 gotoxy(50,20);printf("%s a perdus le jeu ",p2.nom);
+                 gotoxy(50,21);printf("%s a gagne le jeu ",p1.nom);
+                 getch();
+                 system("cls");
 
              } else
              {
                  gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
-                  gotoxy(80,5);printf("|score:%d|",p2.Score);
-                    gotoxy(50,20);printf("%s a perdus le jeu ",p1.nom);
-                     gotoxy(50,21);printf("%s a gagne le jeu ",p2.nom);
-                    getch();
-                    system("cls");
+                 gotoxy(80,5);printf("|score:%d|",p2.Score);
+                 gotoxy(50,20);printf("%s a perdus le jeu ",p1.nom);
+                 gotoxy(50,21);printf("%s a gagne le jeu ",p2.nom);
+                 getch();
+                 system("cls");
              }
 
      } break;
                case 3:
                     {
-                        p1.Score=0;
-                              gotoxy(60,20);printf("la contrainte du temps est : 8 (S)");
-                              gotoxy(60,21);printf("la contrainte du score est : 6 (S)");
-                                c=x=y=i=0;
+                             p1.Score=0;
+                             c=x=y=i=0;
                tableau();
+               gotoxy(60,20);printf("la contrainte du temps est : 8 (S)");
+               delay(600);
+               gotoxy(60,21);printf("                                          ");
+               gotoxy(60,21);printf("la contrainte du score est : 6 (S)");
+               delay(600);
+               gotoxy(60,21);printf("                                          ");
                time(&depart);
           do{
                              c++;
@@ -674,7 +693,9 @@ void j2()
                 }
               else{
                    gotoxy(y*4+19,x*2+6);printf("X");
-                   gotoxy(5,21);printf("Rate!");
+                    gotoxy(5,21);printf("rate!");
+                   delay(400);
+                   gotoxy(5,21);printf("      ");
                    break;
                   }
             //la contrainte du score qui est 6:
