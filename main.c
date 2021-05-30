@@ -7,17 +7,19 @@
 #include "JEU.h"
 int main()
  {
-   //une fois le joueur 2 rate un navire -> diminution du score par exemple ce cas le score sur 40 /
+   //une fois le joueur 2 rate un navire -> diminution du score par exemple ce cas le scorFe sur 40 /
    //traiter les ca_  s des characteres  de navires :
         char rejouer,quitter;
         int i,j;
         int re;
         int choix;
-        system("COLOR 2");
+        system("COLOR 4");
         intro();
          Debut:
 do{
-     for(i=0;i<6;i++)
+
+     A=B=C=0;
+     for(i=0;i<6;i++) //initialisation de la matrice avec des caracteres 
                      {
                          for(j=0;j<6;j++)
                          {
@@ -26,8 +28,13 @@ do{
                      }
     system("cls");
     Menu();
-    do{
+   //choix du joueur 
+    do{ 
     gotoxy(28,18);printf("  ");scanf("%d",&choix);
+    if(choix<1 || choix>4)
+    {
+        printf("donner un choix valide \n");
+    }
    }while(choix<1 || choix>4);
  switch(choix)
     {
@@ -87,7 +94,7 @@ do{
  printf("Pour rejouer taper o : ");
  fflush(stdin);
  scanf("%c",&rejouer);
- }while(rejouer=='O' || rejouer=='_o');
+ }while(rejouer=='O' || rejouer=='o');
  return 0;
 }
 
