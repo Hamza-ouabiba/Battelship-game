@@ -9,33 +9,31 @@ typedef struct
 {
     char nom[20];
     int Score;//creation d'une structure qui stocke le nom des deux joueurs
-    int couleur;
     int age;
 } player;
-Navire nav1[3];
-Navire nav2[3];
-Navire nav3[3];
+Navire nav1[3];//---->
+Navire nav2[3];//----> //creation des tableaux de chaque navire qui va comporter les coordonees :
+Navire nav3[3];//---->
 player p1,p2;
-void tableauOrdinateur();
- int i;
- int j;
+int i;//----->variable globale
+int j;//------>
 char a[6][6];
 int A,B,C;
 int score;
 int CoordonnePcHorizontal();  //choisir les coord avec une fonction puis les controlers dans une autre fonction
-int Coordonnee_Pc_Vertocal();
+int Coordonnee_Pc_Vertocal();//fonction responsable de la generattion des coordonnées aleatoires et les controlers si ils sont deja pris par un autre navire ---->1=(reserve) , 2=(emplacement disponible)
 int Coordonnee_Pc_diagonal(); //choisir les coord avec une fonction puis les controlers dans une autre fonction
-void j1(void);
-void j2(void);
+void j1(void); //procedure du premier joueur qui choisis l'emplacement des navires :
+void j2(int ordi);//pricedure du deuxieme joueuer qui va deviner ces emplacements
 void delay(clock_t a);
-void intro(void);
-void Menu(void);
-void tableau(void);
-void regleGeneral(void);
-void Pseudo();
-int choixOrdinateur();
-void choix_ordi_vs_joueur();
-//level 1 il ya la diminution du score avec 1 suel point :
+void intro(void);//affichage d'une sipmle intro
+void Menu(void);//affichage du menu de jeu
+void tableau(void);//affichage de la grille
+void regleGeneral(void);//les regles du jeu
+void Pseudo();//procedure responsable du saisie des infos de chaque joueur --->PSEUDONYM.....
+void choix_ordi_vs_joueur();//procedure responsable de la creation des navires dans la grille
+void Pseudo_ordinateur();
+//level 1 il ya la diminution du score avec 1 seul point :
 //level 2 il ya l'intervention du temps dans ce cas la contrainte du tamps est: 10 (S)
 //level 3 il ya l'intervention du temps dans ce cas la contrainte du temps et la contrainte du score avec le score a 6points :
 void Menu()
@@ -62,19 +60,19 @@ void Menu()
 void tableau()
 {
           gotoxy(15,4);;printf("   ³ 0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³");
-          gotoxy(15,5);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
+          gotoxy(15,5);printf("ÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄ³");
           gotoxy(15,6);printf(" 0 ³   ³   ³   ³   ³   ³   ³");
-          gotoxy(15,7);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
+          gotoxy(15,7);printf("ÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄ³");
           gotoxy(15,8);printf(" 1 ³   ³   ³   ³   ³   ³   ³");
-          gotoxy(15,9);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
+          gotoxy(15,9);printf("ÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄ³");
           gotoxy(15,10);printf(" 2 ³   ³   ³   ³   ³   ³   ³");
-          gotoxy(15,11);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
+          gotoxy(15,11);printf("ÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄ³");
           gotoxy(15,12);printf(" 3 ³   ³   ³   ³   ³   ³   ³");
-          gotoxy(15,13);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
+          gotoxy(15,13);printf("ÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³");
           gotoxy(15,14);printf(" 4 ³   ³   ³   ³   ³   ³   ³");
-          gotoxy(15,15);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
+          gotoxy(15,15);printf("ÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄ³");
           gotoxy(15,16);printf(" 5 ³   ³   ³   ³   ³   ³   ³");
-          gotoxy(15,17);printf("ÄÄÄÅÄÄÄÅÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³ÄÄÄ³");
+          gotoxy(15,17);printf("ÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÙ");
 }
 void regleGeneral(){
         printf("\t\t\t\tRegle generale du jeu \n") ;
@@ -82,36 +80,50 @@ void regleGeneral(){
 	    printf ("1. Il s'agit d'un jeu qui contient deux joueurs,et il y a aussi possibilites de jouer avec l'ordinateur comment etant le 1er joueur qui place les navires") ;
 	    printf ("2. le joueur  choisis les informations (coordonnees) initiale de ses navires\n") ;
 	    printf (" pour le plateau de jeu \n") ;
-	    printf ("3. Il y a 3 types de formations a placer \n") ;
-	    printf ("4. la grille des navires est imprim%ce et l'utilisateur doit choisir  \n",120) ;
-	    printf ("5. Dans le cas d'ordinateur il selectionne aleatoirement l'endroit ou le prochain tir du joueur sera effectuee (coordonnees en GREC) \n") ;
+	    printf ("3. Il y a 3 types de navires a placer \n") ;
+	    printf ("4. la grille des navires est imprimee et l'utilisateur doit choisir  \n",120) ;
+	    printf ("5. Dans le cas d'ordinateur il selectionne aleatoirement l'endroit ou le prochain tir du joueur sera effectuee \n") ;
 	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonnees du tir en manipulant les fleches de son clavier\n") ;
 	    printf ("7. Le jeu commence alors que chaque joueur tente de deviner l'emplacement des navires\n") ;
-	    printf (" du plateau de jeu de l'adversaire ; [chacaractere du navire] touche et [X] manque\n") ;
-	    printf (" 8. Le premier joueur qui a devine l'emplacement de tous les navires a gagne mais qui aussi depend de chaque niveau...\n") ;
-	    printf("  9.level 1 il ya la diminution du score avec 1 sur l point \n");
-	    printf(" 10.level 2 il ya l'intervention du temps dans ce cas la contrainte du tamps est: 10 (S) \n");
-	    printf(" 11.level 3 il ya l'intervention du temps dans ce cas la contrainte du temps et la contrainte du score avec le score a 6points \n");
+	    printf (" du plateau de jeu de l'adversaire  [chacaractere du navire] touche et [X] manque\n") ;
+	    printf ("8. Le premier joueur qui a devine l'emplacement de tous les navires a gagne mais qui aussi depend de chaque niveau...\n") ;
+	    printf("9.level 1 il ya la diminution du score avec 1 sur l point \n");
+	    printf("10.level 2 il ya l'intervention du temps dans ce cas la contrainte du tamps est: 10 (S) \n");
+	    printf("11.level 3 il ya l'intervention du temps dans ce cas la contrainte du temps et la contrainte du score avec le score a 6points \n");
     }
 void Pseudo()
 {
     //a mettre un tableau pour afficher les infos de chque joueuer
-                     system("cls");
-     gotoxy(10,4);printf("ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n");
-	 gotoxy(10,5);printf("³          PLAYER 1        ³         PLAYER 2      ³\n");
-	 gotoxy(10,6);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
-     gotoxy(10,7);printf("³ PSEUDO :                 ³                       ³\n");
-	 gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
-     gotoxy(10,9);printf("³ AGE :                    ³                       ³\n");
-    gotoxy(10,10);printf("ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
-	gotoxy(10,11);printf("³ COULEUR :                ³                       ³\n");
-    gotoxy(10,12);printf("ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n");
-                     gotoxy(20,7);gets(p1.nom);
+    system("cls");
+    gotoxy(10,4);printf("          ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n");
+	gotoxy(10,5);printf("          ³     PLAYER 1    ³    PLAYER 2     ³\n");
+	gotoxy(10,6);printf("ÚÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+    gotoxy(10,7);printf("³ PSEUDO :³                 ³                 ³\n");
+	gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+    gotoxy(10,9);printf("³ AGE :   ³                 ³                 ³\n");
+    gotoxy(10,10);printf("ÀÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n");
+                     gotoxy(23,7);gets(p1.nom);
                      gotoxy(40,7);gets(p2.nom);
-                     gotoxy(20,9);scanf("%d",&p1.age);
-                     gotoxy(40,9);scanf("%d",&p2.age);
-                     gotoxy(20,11);scanf("%d",&p1.couleur);
-                     gotoxy(40,11);scanf("%d",&p2.couleur);
+                     do
+                     {
+                         gotoxy(23,9);scanf("%d",&p1.age);
+                         if(p1.age<8 || p1.age>100)
+                         {
+                             gotoxy(20,15);printf("vous n'avez pas l'age requis pour jouer");
+                             delay(600);
+                             gotoxy(20,15);printf("                                          ");
+                         }
+                     } while(p1.age<8 || p1.age>100);
+                     do
+                     {
+                         gotoxy(40,9);scanf("%d",&p2.age);
+                         if(p2.age<8 || p2.age>100)
+                         {
+                             gotoxy(20,15);printf("vous n'avez pas l'age requis pour jouer");
+                              delay(600);
+                          gotoxy(20,15);printf("                                          ");
+                         }
+                     } while(p2.age<8 || p2.age>100);
                      sleep(2);
                      system("cls");
 
@@ -219,7 +231,6 @@ void j1()
     int choix_navire;
     char position;
     int x,y;
-    textcolor(p1.couleur);
     x=y=0;
     A=B=C=0;
     tableau();
@@ -271,7 +282,7 @@ void j1()
                               }
                               else
                               {
-                                 gotoxy(40,20);printf("Navire exite deja  ");
+                                 gotoxy(40,20);printf("Navire existe deja  ");
                                  delay(400);
                                  gotoxy(40,20);printf("                                ");
                               }
@@ -315,7 +326,7 @@ void j1()
                           }
                           else
                               {
-                                 gotoxy(40,20);printf("Navire exite deja ");
+                                 gotoxy(40,20);printf("Navire existe deja ");
                                  delay(400);
                                  gotoxy(40,20);printf("                                ");
                               }
@@ -357,7 +368,7 @@ void j1()
                      }
                      else
                               {
-                                 gotoxy(40,20);printf("Navire exite deja ");
+                                 gotoxy(40,20);printf("Navire existe deja ");
                                  delay(400);
                                  gotoxy(40,20);printf("                                ");
                               }
@@ -370,7 +381,7 @@ void j1()
    }while(i!=3);
    system("cls");
 }
-void j2()
+void j2(int ordi)
 {
     int i=0,x=0,y=0,c=0,k;
     int Ci[3]={0};
@@ -380,13 +391,23 @@ void j2()
     int suc;
     int choix;
     time_t  depart,arrivee;
-    textcolor(p2.couleur);
      system("cls");
-     printf("choix:taper 1 pour level 1(FACILE) :\n");
-     printf("choix:taper 2 pour level 2(MOYEN) : \n");
-     printf("choix:taper 3 pour level 3 (DIFFICILE) : \n");
-     scanf("%d",&choix);
+     gotoxy(20,10);printf("choix:taper 1 pour level 1(FACILE) :\n");
+     gotoxy(20,11);printf("choix:taper 2 pour level 2(MOYEN) : \n");
+     gotoxy(20,12);printf("choix:taper 3 pour level 3 (DIFFICILE) : \n");
+     do
+     {
+         scanf("%d",&choix);
+         if(choix<1 || choix>3)
+         {
+             printf("donner un choix");
+         }
+     } while(choix<1 || choix>3);
      system("cls");
+     if(ordi==3)
+      {
+        strcpy(p1.nom,"ordinateur");
+      }
    //
  gotoxy(14,1);printf("\**************JOUEUR2*************");
  switch(choix)
@@ -398,7 +419,7 @@ void j2()
       do{
 
                              c++;
-                 gotoxy(14,2);printf("Saisir l'emplacement de vavire %d",i);
+                 gotoxy(14,2);printf("Saisir l'emplacement de navire %d",i+1);
 
                    do{ suc=0;
                        gotoxy(y*4+20,x*2+6);
@@ -466,6 +487,7 @@ void j2()
                        }
                 }
               else{
+                    gotoxy(y*4+19,x*2+6);printf("X");
                    gotoxy(5,21);printf("rate!");
                    delay(400);
                    gotoxy(5,21);printf("      ");
@@ -478,6 +500,7 @@ void j2()
                   }
 
         }while(i!=3);
+        getch();
         time(&arrivee);
         if(p2.Score>10){
             gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
@@ -485,7 +508,6 @@ void j2()
             gotoxy(50,20);printf("%s a perdus le jeu ",p2.nom);
             gotoxy(50,21);printf("%s a gagne le jeu ",p1.nom);
             getch();
-            system("cls");
         } else
         {
             gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
@@ -493,15 +515,25 @@ void j2()
             gotoxy(50,20);printf("%s a perdus le jeu ",p1.nom);
             gotoxy(50,21);printf("%s a gagne le jeu ",p2.nom);
             getch();
-            system("cls");
         }
+        getch();
+    system("cls");
+    gotoxy(10,4);printf("          ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿");
+	gotoxy(10,5);printf("          ³     PLAYER 2    ³");
+	gotoxy(10,6);printf("ÚÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´");
+    gotoxy(10,7);printf("³ SCORE   ³                 ³");
+	gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´");
+    gotoxy(10,9);printf("³ TEMPS   ³                 ³");
+    gotoxy(10,10);printf("ÀÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ");
+    gotoxy(24,9);printf("%.0f (S)",difftime(arrivee, depart));
+    gotoxy(24,7);printf("%d POINTS",p2.Score);
     } break;
 
    case 2:
          {
              p2.Score=0;
              //level 2:
-                                c=x=y=i=0;
+             c=x=y=i=0;
           tableau();
           gotoxy(60,20);printf("la contrainte du temps est : 10 (S)");
           delay(600);
@@ -509,7 +541,7 @@ void j2()
           time(&depart);
       do{
                  c++;
-                 gotoxy(14,2);printf("Saisir l'emplacement de vavire %d",i);
+                 gotoxy(14,2);printf("Saisir l'emplacement de navire %d",i+1);
 
                    do{ suc=0;
                        gotoxy(y*4+20,x*2+6);
@@ -593,15 +625,15 @@ void j2()
 
 
         }while(i!=3);
-            time(&arrivee);
-             if(difftime(arrivee,depart)>10)
+        getch();
+    time(&arrivee);
+    if(difftime(arrivee,depart)>10)
              {
                  gotoxy(80,4);printf("|TIME:%.2f|",difftime(arrivee, depart));
                  gotoxy(80,5);printf("|score:%d|",p2.Score);
                  gotoxy(50,20);printf("%s a perdus le jeu ",p2.nom);
                  gotoxy(50,21);printf("%s a gagne le jeu ",p1.nom);
                  getch();
-                 system("cls");
 
              } else
              {
@@ -610,25 +642,35 @@ void j2()
                  gotoxy(50,20);printf("%s a perdus le jeu ",p1.nom);
                  gotoxy(50,21);printf("%s a gagne le jeu ",p2.nom);
                  getch();
-                 system("cls");
              }
+     getch();
+     system("cls");
+    gotoxy(10,4);printf("          ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿");
+	gotoxy(10,5);printf("          ³     PLAYER 2    ³");
+	gotoxy(10,6);printf("ÚÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´");
+    gotoxy(10,7);printf("³ SCORE   ³                 ³");
+	gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´");
+    gotoxy(10,9);printf("³ TEMPS   ³                 ³");
+    gotoxy(10,10);printf("ÀÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ");
+    gotoxy(24,9);printf("%.0f (S)",difftime(arrivee, depart));
+    gotoxy(24,7);printf("%d POINTS",p2.Score);
 
      } break;
                case 3:
                     {
-                             p1.Score=0;
+                             p2.Score=0;
                              c=x=y=i=0;
                tableau();
                gotoxy(60,20);printf("la contrainte du temps est : 8 (S)");
                delay(600);
-               gotoxy(60,21);printf("                                          ");
+               gotoxy(60,20);printf("                                            ");
                gotoxy(60,21);printf("la contrainte du score est : 6 (S)");
                delay(600);
                gotoxy(60,21);printf("                                          ");
                time(&depart);
           do{
                              c++;
-                 gotoxy(14,2);printf("Saisir l'emplacement de vavire %d",i);
+                 gotoxy(14,2);printf("Saisir l'emplacement de vavire %d",i+1);
 
                    do{ suc=0;
                        gotoxy(y*4+20,x*2+6);
@@ -706,25 +748,34 @@ void j2()
             //la contrainte du score qui est 6:
 
         }while(i!=3);
+        getch();
             time(&arrivee);
-             if(score==6 && difftime(arrivee,depart)<=6)
+             if(p2.Score==6 && difftime(arrivee,depart)<=6)
             {
                 gotoxy(80,4);printf("|TIME:%.0f|",difftime(arrivee, depart));
                 gotoxy(80,5);printf("|score:%d|",p2.Score);
                 gotoxy(50,20);printf("BRAVO %s vous avez ecoulees tous les navires !!!",p2.nom);
                 gotoxy(50,21);printf("%s a perdus le jeu ",p1.nom);
-                system("cls");
             } else
             {
                 gotoxy(80,4);printf("|TIME:%.2f|",difftime(arrivee, depart));
                 gotoxy(80,5);printf("|score:%d|",p2.Score);
                 gotoxy(50,20);printf("%s a gagne le jeu ",p1.nom);
-                gotoxy(50,21);printf("%s a perdus le jeu ",p1.nom);
+                gotoxy(50,21);printf("%s a perdus le jeu ",p2.nom);
                 getch();
-                system("cls");
             }
-
-    }
+    getch();
+    system("cls");
+    gotoxy(10,4);printf("          ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿");
+	gotoxy(10,5);printf("          ³     PLAYER 2    ³");
+	gotoxy(10,6);printf("ÚÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´");
+    gotoxy(10,7);printf("³ SCORE   ³                 ³");
+	gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´");
+    gotoxy(10,9);printf("³ TEMPS   ³                 ³");
+    gotoxy(10,10);printf("ÀÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ");
+    gotoxy(24,9);printf("%.0f (S)",difftime(arrivee, depart));
+    gotoxy(24,7);printf("%d POINTS",p2.Score);
+    } break;
 }
 
 }
@@ -768,5 +819,31 @@ void choix_ordi_vs_joueur()
 
            }
          }
+}
+void Pseudo_ordinateur()
+{
+    system("cls");
+    gotoxy(10,4);printf("          ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n");
+	gotoxy(10,5);printf("          ³     PLAYER 1    ³    PLAYER 2     ³\n");
+	gotoxy(10,6);printf("ÚÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+    gotoxy(10,7);printf("³ PSEUDO :³                 ³                 ³\n");
+	gotoxy(10,8);printf("ÃÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n");
+    gotoxy(10,9);printf("³ AGE :   ³                 ³                 ³\n");
+    gotoxy(10,10);printf("ÀÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n");
+                     gotoxy(23,7);printf("ORDINATEUR");
+                     gotoxy(40,7);gets(p2.nom);
+                     gotoxy(23,9);printf("--");
+                     do
+                     {
+                         gotoxy(40,9);scanf("%d",&p2.age);
+                         if(p2.age<8 || p2.age>100)
+                         {
+                             gotoxy(20,15);printf("vous n'avez pas l'age requis pour jouer");
+                              delay(600);
+                          gotoxy(20,15);printf("                                          ");
+                         }
+                     } while(p2.age<8 || p2.age>100);
+                     sleep(2);
+                     system("cls");
 }
 #endif // JEU_H_INCLUDED
