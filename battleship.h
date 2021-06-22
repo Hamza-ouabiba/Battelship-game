@@ -79,14 +79,14 @@ void regleGeneral(){
         printf ("REGLES DU JEU:\n") ;
 	    printf ("1. Il s'agit d'un jeu qui contient deux joueurs,et il y a aussi possibilites de jouer avec l'ordinateur comment etant le 1er joueur qui place les navires") ;
 	    printf ("2. le joueur  choisis les informations (coordonnees) initiale de ses navires\n") ;
-	    printf (" pour le plateau de jeu \n") ;
 	    printf ("3. Il y a 3 types de navires a placer \n") ;
-	    printf ("4. la grille des navires est imprimee et l'utilisateur doit choisir  \n",120) ;
+	    printf ("4. la grille des navires est imprim%ce et l'utilisateur doit choisir  \n",120) ;
 	    printf ("5. Dans le cas d'ordinateur il selectionne aleatoirement l'endroit ou le prochain tir du joueur sera effectuee \n") ;
 	    printf ("6. Lorsque l'ennemi frappe le joueur, l'utilisateur doit saisir les coordonnees du tir en manipulant les fleches de son clavier\n") ;
 	    printf ("7. Le jeu commence alors que chaque joueur tente de deviner l'emplacement des navires\n") ;
 	    printf (" du plateau de jeu de l'adversaire  [chacaractere du navire] touche et [X] manque\n") ;
 	    printf ("8. Le premier joueur qui a devine l'emplacement de tous les navires a gagne mais qui aussi depend de chaque niveau...\n") ;
+            printf ("-------------LES DIFFERENTS NIVEAUX DU JEU---------------\n") ;
 	    printf("9.level 1 il ya la diminution du score avec 1 sur l point \n");
 	    printf("10.level 2 il ya l'intervention du temps dans ce cas la contrainte du tamps est: 10 (S) \n");
 	    printf("11.level 3 il ya l'intervention du temps dans ce cas la contrainte du temps et la contrainte du score avec le score a 6points \n");
